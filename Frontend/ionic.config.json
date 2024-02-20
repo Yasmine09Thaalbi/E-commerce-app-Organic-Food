@@ -1,0 +1,7 @@
+{
+  "name": "organicFood",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
