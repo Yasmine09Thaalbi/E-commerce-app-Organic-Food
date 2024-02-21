@@ -1,0 +1,30 @@
+<ion-content >
+  <div class="signup-form">
+    <h1>Create you account</h1>
+    <ion-item>
+      <ion-label position="floating">Full name</ion-label>
+      <ion-input aria-label="Full name" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Email Address</ion-label>
+      <ion-input aria-label="Email" type="email"> </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Password</ion-label>
+      <ion-input aria-label="password" type="password"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Confirm password</ion-label>
+      <ion-input aria-label="password" type="password"></ion-input>
+    </ion-item>
+
+    <ion-item lines="none" style="margin-top: 50px;">
+      <ion-checkbox slot="start"></ion-checkbox>
+      <ion-label  style="color:black; font-size: small; font-weight: bold;">I understood the terms & policy.</ion-label>
+    </ion-item>
+
+    <button class="ion-button" expand="full">sign up</button>
+    <p>have an account? <ion-router-link routerLink="/sign-in" style="color:black; font-weight: bold;">sign in</ion-router-link></p>
+
+  </div>
+</ion-content>
