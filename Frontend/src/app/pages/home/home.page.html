@@ -1,20 +1,88 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+<ion-content>
+  <div class="search-cart-container">
+    <ion-searchbar placeholder="Search category"></ion-searchbar>
+    <div class="cart-button">
+      <ion-button color="#FFFFFF" (click)="CartPage()">
+        <ion-icon name="cart" class="cart-icon"></ion-icon>
+      </ion-button>
+    </div>
   </div>
+
+  <ion-card class="special-offer">
+    <ion-img class="background-image" src="assets/images/image.png"></ion-img>
+    <ion-card-content class="text-container">
+      <ion-card-title style="color:aliceblue;font-size: 15px;margin-bottom: 15px;margin-top:10px">Ramadan Offers</ion-card-title>
+      <ion-label style="color:aliceblue;font-size: 25px;">Get 25%</ion-label>
+      <ion-button class="BTN1" >Grap offers</ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <p>Categories</p>
+  <ion-row class="category-buttons">
+    <ion-col size="4.7">
+      <ion-button>All Products</ion-button>
+    </ion-col>
+    <ion-col size="4">
+      <ion-button>Vegetables</ion-button>
+    </ion-col>
+    <ion-col size="3">
+      <ion-button>Fruits</ion-button>
+    </ion-col>
+    <ion-col size="3">
+      <ion-button style="border-radius: 20px;">Bread</ion-button>
+    </ion-col>
+    <ion-col size="3">
+      <ion-button>Meat</ion-button>
+    </ion-col>
+  </ion-row>
+
+  <p>Best selling</p>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6">
+        <ion-card class="card">
+          <div style="display: flex; justify-content: center;">
+            <ion-img src="assets/images/bell pepper.png"></ion-img>
+          </div>
+          <ion-card-content>
+            <ion-label style="text-align: center;">Bell Pepper Red</ion-label>
+            <ion-label style="text-align: center;color:#FF324B">
+              $45/1kg
+              <ion-icon name="add-circle" slot="end"></ion-icon>
+            </ion-label>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="6">
+        <ion-card class="card">
+          <div style="display: flex; justify-content: center;">
+            <ion-img src="assets/images/lamb meat.png"></ion-img>
+          </div>
+          <ion-card-content>
+            <ion-label style="text-align: center;">Lamb Meat</ion-label>
+            <ion-label style="text-align: center;color:#FF324B">
+              $45/1kg
+              <ion-icon name="add-circle" slot="end"></ion-icon>
+            </ion-label>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-tabs style="margin-top:5%;">
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button tab="tab-go-back" (click)="goBack()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-tab-button>
+      <ion-tab-button tab="tab-home" (click)="goToHomePage()">
+        <ion-icon name="home-outline"></ion-icon>
+      </ion-tab-button>
+      <ion-tab-button tab="tab-account" (click)="goToAccountPage()">
+        <ion-icon name="person-outline"></ion-icon>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
 </ion-content>
+
+
