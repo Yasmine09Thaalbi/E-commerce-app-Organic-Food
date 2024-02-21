@@ -1,0 +1,37 @@
+
+<ion-content class="ion-padding" >
+  <div class="login-form">
+    <h1 >Edit Profile</h1>
+    <ion-item>
+      <ion-label position="floating">Name</ion-label>
+      <ion-input aria-label="Name" type="name"> </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Email Address</ion-label>
+      <ion-input aria-label="Email" type="email"> </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">New Password</ion-label>
+      <ion-input aria-label="New Password" type="password"></ion-input>
+    </ion-item>
+    <button class="ion-button" expand="full" >Edit</button>
+   
+  </div>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-tabs >
+      <ion-tab-bar >
+        <ion-tab-button tab="tab-go-back" (click)="goBack()">
+          <ion-icon name="arrow-back-outline"></ion-icon>
+        </ion-tab-button>
+        <ion-tab-button tab="tab-home" (click)="goToHomePage()">
+          <ion-icon name="home-outline"></ion-icon>
+        </ion-tab-button>
+        <ion-tab-button tab="tab-account" (click)="goToAccountPage()">
+          <ion-icon name="person-outline"></ion-icon>
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-tabs>
+  </ion-toolbar>
+</ion-footer>
