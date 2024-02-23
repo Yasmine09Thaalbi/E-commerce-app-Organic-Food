@@ -1,0 +1,60 @@
+.centered{
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    margin-top: 15%;
+    font-family: 'Poppins';
+}
+
+ion-img {
+    border-radius: 50%;
+}
+.user-name {
+    font-weight: bold;
+}
+.user-email {
+    color:#FF324B;
+}
+
+.custom-button {
+    font-family: 'Poppins';
+    height: 52px;
+    width: 150px;
+    background-color: #82C408; 
+    color: #ffffff; 
+    border-radius: 26px; 
+    margin-top: 10%;
+    margin-bottom: 5%;
+}
+
+.purchase-card {
+    ion-thumbnail {
+      width: 50px;
+      height: 50px;
+    }
+    .item-price {
+      font-weight: bold;
+    }
+}
+
+p{
+    font-family: 'DM Sans';
+    margin-left: 17px;
+    font-weight: bold;
+    font-size: 18px;
+
+}
+
+.custom-toolbar {
+    --border-width: 0; 
+    --background:white; 
+    --border-color:white;
+}
+
+.custom-logout-icon{
+    color: black;
+    width: 40px;
+    height: 40px;
+}
+  

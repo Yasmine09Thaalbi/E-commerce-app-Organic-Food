@@ -35,7 +35,11 @@ const routes: Routes = [
   {
     path: 'add-seller',
     loadChildren: () => import('./pages/add-seller/add-seller.module').then( m => m.AddSellerPageModule)
+  },  {
+    path: 'customer-account',
+    loadChildren: () => import('./pages/customer-account/customer-account.module').then( m => m.CustomerAccountPageModule)
   },
+
 
 ];
 
