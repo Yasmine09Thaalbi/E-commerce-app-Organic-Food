@@ -1,13 +1,17 @@
-<ion-content>
-  <div class="search-cart-container">
+<ion-header padding>
+  <ion-toolbar class="custom-toolbar">
     <ion-searchbar placeholder="Search category"></ion-searchbar>
-    <div class="cart-button">
-      <ion-button color="#FFFFFF" (click)="CartPage()">
-        <ion-icon name="cart" class="cart-icon"></ion-icon>
-      </ion-button>
-    </div>
-  </div>
+    <ion-buttons slot="end">
+      <div class="cart-button">
+        <ion-button color="#FFFFFF" (click)="CartPage()">
+          <ion-icon name="cart" class="cart-icon"></ion-icon>
+        </ion-button>
+      </div>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 
+<ion-content>
   <ion-card class="special-offer">
     <ion-img class="background-image" src="assets/images/image.png"></ion-img>
     <ion-card-content class="text-container">
@@ -44,45 +48,59 @@
           <div style="display: flex; justify-content: center;">
             <ion-img src="assets/images/bell pepper.png"></ion-img>
           </div>
+          <ion-card-header>
+            <ion-label >Bell Pepper Red</ion-label>
+          </ion-card-header>
           <ion-card-content>
-            <ion-label style="text-align: center;">Bell Pepper Red</ion-label>
-            <ion-label style="text-align: center;color:#FF324B">
-              $45/1kg
-              <ion-icon name="add-circle" slot="end"></ion-icon>
+            <ion-label style="display: flex; justify-content: space-between; align-items: center; color: #FF324B;">
+              <span>$45/1kg</span>
+              <ion-button (click)="addToCart()" slot="end">
+                <ion-icon name="add-circle"></ion-icon>
+              </ion-button>
             </ion-label>
           </ion-card-content>
         </ion-card>
       </ion-col>
+
       <ion-col size="6">
         <ion-card class="card">
           <div style="display: flex; justify-content: center;">
             <ion-img src="assets/images/lamb meat.png"></ion-img>
           </div>
+          <ion-card-header>
+            <ion-label >Lamb Meat</ion-label>
+          </ion-card-header>
           <ion-card-content>
-            <ion-label style="text-align: center;">Lamb Meat</ion-label>
-            <ion-label style="text-align: center;color:#FF324B">
-              $45/1kg
-              <ion-icon name="add-circle" slot="end"></ion-icon>
+            <ion-label style="display: flex; justify-content: space-between; align-items: center; color: #FF324B;">
+              <span>$45/1kg</span>
+              <ion-button class="BTN"  (click)="addToCart()" slot="end">
+                <ion-icon name="add-circle" ></ion-icon>
+              </ion-button>
             </ion-label>
           </ion-card-content>
         </ion-card>
       </ion-col>
     </ion-row>
   </ion-grid>
-
-  <ion-tabs style="margin-top:5%;">
-    <ion-tab-bar slot="bottom">
-      <ion-tab-button tab="tab-go-back" (click)="goBack()">
-        <ion-icon name="arrow-back-outline"></ion-icon>
-      </ion-tab-button>
-      <ion-tab-button tab="tab-home" (click)="goToHomePage()">
-        <ion-icon name="home-outline"></ion-icon>
-      </ion-tab-button>
-      <ion-tab-button tab="tab-account" (click)="goToAccountPage()">
-        <ion-icon name="person-outline"></ion-icon>
-      </ion-tab-button>
-    </ion-tab-bar>
-  </ion-tabs>
 </ion-content>
+
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-tabs >
+      <ion-tab-bar >
+        <ion-tab-button tab="tab-go-back" (click)="goBack()">
+          <ion-icon name="arrow-back-outline"></ion-icon>
+        </ion-tab-button>
+        <ion-tab-button tab="tab-home" (click)="goToHomePage()">
+          <ion-icon name="home-outline"></ion-icon>
+        </ion-tab-button>
+        <ion-tab-button tab="tab-account" (click)="goToAccountPage()">
+          <ion-icon name="person-outline"></ion-icon>
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-tabs>
+  </ion-toolbar>
+</ion-footer>
 
 

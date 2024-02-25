@@ -2,7 +2,7 @@
   background-color: #82C408;
   color: #ffffff;
   height: 164.03px;
-  width: 90%;
+  width: 93%;
   margin-right:2%;
 }
 
@@ -17,6 +17,13 @@
   font-weight: bold;
 }
 
+.custom-toolbar {
+  --border-width: 0; 
+  --background:white; 
+  --border-color:white;
+  margin-top: 10px;
+}
+
 .card {
   width: 150px;
 }
@@ -28,6 +35,12 @@
 ion-img {
   height: 97px;
   width: 111.25px;
+}
+
+// style for the button in the fruit card
+ion-button {
+  --background: #82C408;
+  border-radius: 50%;
 }
 
 p {
@@ -52,11 +65,6 @@ p {
   width: 24px;
   height: 24px;
   color: #ffffff;
-}
-
-.search-cart-container {
-  display: flex;
-  align-items: center;
 }
 
 .special-offer {
