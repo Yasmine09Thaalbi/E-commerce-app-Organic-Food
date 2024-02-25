@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar class="custom-toolbar">
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()">
+        <ion-icon name="log-out-outline" class="custom-logout-icon"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="centered">
+    <ion-img src="assets/images/seller-picture.png"></ion-img>
+    <ion-label class="user-name">Seller</ion-label>
+    <ion-label class="user-email">seller&#64;gmail.com</ion-label>
+    <div class="button-container">
+      <button class="custom-button" expand="full" (click)="GoProfilePage()">edit profile</button>
+      <button class="custom-button" expand="full" (click)="GoAddArticlePage()">add article</button>
+  </div>
+  </div>
+
+
+  <p>My articles</p>
+
+</ion-content>
+
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-tabs >
+      <ion-tab-bar >
+        <ion-tab-button tab="tab-go-back" (click)="goBack()">
+          <ion-icon name="arrow-back-outline"></ion-icon>
+        </ion-tab-button>
+        <ion-tab-button tab="tab-home" (click)="goToHomePage()">
+          <ion-icon name="home-outline"></ion-icon>
+        </ion-tab-button>
+        <ion-tab-button tab="tab-account" (click)="goToAccountPage()">
+          <ion-icon name="person-outline"></ion-icon>
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-tabs>
+  </ion-toolbar>
+</ion-footer>
+
