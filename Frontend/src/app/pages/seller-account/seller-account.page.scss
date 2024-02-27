@@ -68,3 +68,39 @@ p{
     height: 40px;
 }
   
+.card {
+    width: 150px;
+  }
+  
+.card ion-item ion-label {
+    font-weight: bold;
+}
+  
+.card ion-img {
+    height: 97px;
+    width: 111.25px;
+}
+
+.custom-icon {
+    color: #82C408; 
+    font-size: 30px; 
+}
+
+.custom-pencil-icon {
+    color: #737473; 
+    font-size: 20px; 
+}
+
+ion-buttons {
+    display: flex;
+    gap: 0; 
+}
+  
+ion-button {
+    margin: 0;
+    padding: 0; 
+}
+
+ion-card-header ion-label {
+    font-weight: bold;
+}

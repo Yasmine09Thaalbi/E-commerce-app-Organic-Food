@@ -19,8 +19,59 @@
   </div>
   </div>
 
-
   <p>My articles</p>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6">
+        <ion-card class="card">
+          <div style="display: flex; justify-content: center;">
+            <ion-img src="assets/images/beans.png"></ion-img>
+          </div>
+          <ion-card-header>
+            <ion-label >Red Beans</ion-label>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-label style="display: flex; justify-content: space-between; align-items: center; color: #FF324B;">
+              <span>$4/1kg</span>
+              <ion-buttons slot="end">
+                <ion-button >
+                  <ion-icon  class="custom-pencil-icon" name="pencil"></ion-icon>
+                </ion-button>
+                <ion-button >
+                  <ion-icon  class="custom-icon" name="close-circle"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+
+            </ion-label>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+      <ion-col size="6">
+        <ion-card class="card">
+          <div style="display: flex; justify-content: center;">
+            <ion-img src="assets/images/potatoes.png"></ion-img>
+          </div>
+          <ion-card-header>
+            <ion-label >Potatoes</ion-label>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-label style="display: flex; justify-content: space-between; align-items: center; color: #FF324B;">
+              <span>$10/1kg</span>
+              <ion-buttons slot="end">
+                <ion-button >
+                  <ion-icon class="custom-pencil-icon" name="pencil"></ion-icon>
+                </ion-button>
+                <ion-button >
+                  <ion-icon class="custom-icon" name="close-circle"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </ion-label>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
 </ion-content>
 
