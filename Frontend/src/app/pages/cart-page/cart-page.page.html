@@ -1,0 +1,35 @@
+<ion-content class="ion-padding">
+  <h1 class="cart-title">Cart</h1> 
+  <ion-list class="cart-list">
+    <ion-item *ngFor="let item of cartItems">
+      <p>{{ item.name }} <br><br><span class="item-price">{{ item.price }} $ / 1kg</span></p>
+      <ion-buttons slot="end">
+        <ion-icon name="remove-circle" color="medium" class="quantity-icon" (click)="decreaseQuantity(item)"></ion-icon>
+        {{ item.quantity }}
+        <ion-icon name="add-circle" class="quantity-icon" (click)="increaseQuantity(item)"></ion-icon>
+      </ion-buttons>
+    </ion-item> 
+  </ion-list>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <div class="total">TOTAL :  <span style="margin-left: 60%;">${{ total }}</span></div>
+    <button class="ion-button checkout-button" expand="full" (click)="checkout()">Check out</button>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-tabs >
+      <ion-tab-bar >
+        <ion-tab-button tab="tab-go-back" (click)="goBack()">
+          <ion-icon name="arrow-back-outline"></ion-icon>
+        </ion-tab-button>
+        <ion-tab-button tab="tab-home" (click)="goToHomePage()">
+          <ion-icon name="home-outline"></ion-icon>
+        </ion-tab-button>
+        <ion-tab-button tab="tab-account" (click)="goToAccountPage()">
+          <ion-icon name="person-outline"></ion-icon>
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-tabs>
+  </ion-toolbar>
+</ion-footer>
+

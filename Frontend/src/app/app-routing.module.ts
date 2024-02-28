@@ -47,7 +47,11 @@ const routes: Routes = [
   {
     path: 'description-page',
     loadChildren: () => import('./pages/description-page/description-page.module').then( m => m.DescriptionPagePageModule)
+  },  {
+    path: 'cart-page',
+    loadChildren: () => import('./pages/cart-page/cart-page.module').then( m => m.CartPagePageModule)
   },
+
 
 
 ];
