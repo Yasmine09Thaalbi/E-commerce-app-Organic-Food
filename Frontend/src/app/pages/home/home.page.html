@@ -54,9 +54,11 @@
           <ion-card-content>
             <ion-label style="display: flex; justify-content: space-between; align-items: center; color: #FF324B;">
               <span>$45/1kg</span>
-              <ion-button (click)="addToCart()" slot="end">
-                <ion-icon name="add-circle"></ion-icon>
-              </ion-button>
+              <ion-buttons slot="end">
+                <ion-button (click)="addToCart()" >
+                  <ion-icon  class="custom-icon" name="close-circle"></ion-icon>
+                </ion-button>
+              </ion-buttons>
             </ion-label>
           </ion-card-content>
         </ion-card>
@@ -73,9 +75,11 @@
           <ion-card-content>
             <ion-label style="display: flex; justify-content: space-between; align-items: center; color: #FF324B;">
               <span>$45/1kg</span>
-              <ion-button class="BTN"  (click)="addToCart()" slot="end">
-                <ion-icon name="add-circle" ></ion-icon>
-              </ion-button>
+              <ion-buttons slot="end">
+                <ion-button (click)="addToCart()" >
+                  <ion-icon  class="custom-icon" name="close-circle"></ion-icon>
+                </ion-button>
+              </ion-buttons>
             </ion-label>
           </ion-card-content>
         </ion-card>

@@ -37,11 +37,12 @@ ion-img {
   width: 111.25px;
 }
 
-// style for the button in the fruit card
-ion-button {
-  --background: #82C408;
-  border-radius: 50%;
-}
+.BTN1 {
+  --color: #82C408;
+  --border-color:#FFFFFF;
+  --background:white;
+  width:50%;
+  }
 
 p {
   font-family: 'DM Sans';
@@ -97,9 +98,7 @@ p {
   //text-align: center;
 }
 
-.BTN1 {
---color: #82C408;
---border-color:#FFFFFF;
---background:white;
-width:50%;
+.custom-icon {
+  color: #82C408; 
+  font-size: 30px; 
 }
