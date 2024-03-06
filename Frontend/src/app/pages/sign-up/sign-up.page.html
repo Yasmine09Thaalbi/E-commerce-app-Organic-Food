@@ -18,7 +18,14 @@
       <ion-input aria-label="password" type="password"></ion-input>
     </ion-item>
 
-    <ion-item lines="none" style="margin-top: 50px;">
+    <ion-item lines="none"  style="margin-top: 40px;">
+      <ion-radio-group value="custom-checked" style="display: flex; flex-direction: row; align-items: center;">
+        <ion-radio value="custom-checked" aria-label="Custom checkbox that is checked">customer</ion-radio>
+        <ion-radio value="custom" aria-label="Custom checkbox"  style="margin-left: 50px;">seller</ion-radio>
+      </ion-radio-group>
+    </ion-item>
+
+    <ion-item lines="none" style="margin-top: 45px;">
       <ion-checkbox slot="start"></ion-checkbox>
       <ion-label  style="color:black; font-size: small; font-weight: bold;">I understood the terms & policy.</ion-label>
     </ion-item>
