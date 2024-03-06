@@ -6,7 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./checkout.page.scss'],
 })
 export class CheckoutPage implements OnInit {
-
+  selectedPaymentMethod: string = 'cash';
+  
   constructor() { }
 
   ngOnInit() {

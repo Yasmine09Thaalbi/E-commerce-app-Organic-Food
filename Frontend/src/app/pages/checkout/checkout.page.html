@@ -1,92 +1,97 @@
-
 <ion-content class="ion-padding">
-  <div class="login-form">
-    <h1> Enter Shipping Details</h1>
+  <div class="Shipping-form">
+    <h1>Enter Shipping Details</h1>
+
     <ion-item>
-      <ion-label position="floating" >Full Name</ion-label>
-      <ion-input type="text" ></ion-input>
+      <ion-label position="floating">Full Name</ion-label>
+      <ion-input type="text"></ion-input>
     </ion-item>
+
     <ion-item>
-      <ion-label position="floating" >Address</ion-label>
-      <ion-input type="text" ></ion-input>
+      <ion-label position="floating">Address</ion-label>
+      <ion-input type="text"></ion-input>
     </ion-item>
+
     <ion-item>
-      <ion-label  >Select City</ion-label>
-      <ion-select >
+      <ion-label>Select City</ion-label>
+      <ion-select>
         <ion-select-option value="city1">City 1</ion-select-option>
         <ion-select-option value="city2">City 2</ion-select-option>
         <ion-select-option value="city3">City 3</ion-select-option>
       </ion-select>
     </ion-item>
+
     <ion-item>
-      <ion-label position="floating" >Street Address</ion-label>
-      <ion-input type="text" ></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating" >Postal Code</ion-label>
-      <ion-input type="text" ></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating" >Phone Number</ion-label>
-      <ion-input type="tel" ></ion-input>
-    </ion-item>
-    <h1> Payment Method</h1>
-    <ion-list>
-      <ion-item lines="none" >
-        <ion-icon name="cash-outline" color="success"></ion-icon>
-        <ion-label >Cash</ion-label>
-        <ion-radio  checked="true" name="paymentMethod" value="cash"></ion-radio>
-      </ion-item>
-      <ion-item lines="none" >
-        <ion-icon name="card-outline" color="warning"></ion-icon>
-        <ion-label >Credit Card</ion-label>
-        <ion-radio name="paymentMethod" value="creditCard"></ion-radio>
-      </ion-item>
-    </ion-list>
-    <ion-item>
-      <ion-label position="floating" >Card Holder Name</ion-label>
+      <ion-label position="floating">Street Address</ion-label>
       <ion-input type="text"></ion-input>
     </ion-item>
+
     <ion-item>
-      <ion-label position="floating" >Card Number</ion-label>
-      <ion-input type="number" ></ion-input>
+      <ion-label position="floating">Postal Code</ion-label>
+      <ion-input type="text"></ion-input>
     </ion-item>
-      <ion-item  >
-        <ion-label position="floating" style="margin-bottom: 4%; font-weight: bold; color: black; ">
-          Expiry Date
-        </ion-label>
+
+    <ion-item>
+      <ion-label position="floating">Phone Number</ion-label>
+      <ion-input type="tel"></ion-input>
+    </ion-item>
+
+    <h1>Payment Method</h1>
+
+    <ion-item lines="none" style="margin-top: 10px;">
+      <ion-radio-group   [(ngModel)]="selectedPaymentMethod" style="display: flex; flex-direction: column;">
+        <ion-radio value="cash" aria-label="Cash payment">
+          <ion-icon name="cash-outline" color="success" size="large"></ion-icon>
+          <ion-label>Cash</ion-label>
+        </ion-radio>
+
+        <ion-radio value="creditCard" aria-label="Credit Card payment" style="margin-top: 10px;">
+          <ion-icon name="card-outline" color="warning" size="large"></ion-icon>
+          <ion-label>Credit Card</ion-label>
+        </ion-radio>
+      </ion-radio-group>
+    </ion-item>
+
+    <ion-item *ngIf="selectedPaymentMethod === 'creditCard'">
+      <ion-label position="floating">Card Holder Name</ion-label>
+      <ion-input type="text"></ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="selectedPaymentMethod === 'creditCard'">
+      <ion-label position="floating">Card Number</ion-label>
+      <ion-input type="number"></ion-input>
+    </ion-item>
+
+    <div style="display: flex; justify-content: space-between;" *ngIf="selectedPaymentMethod === 'creditCard'">
+
+      <ion-item>
+        <ion-label position="floating" style="font-weight: bold; color: black;">Expiry Date</ion-label>
         <ion-input type="date"></ion-input>
       </ion-item>
-      <ion-item >
-        <ion-label position="floating" style="margin-bottom: 4%; font-weight: bold; color: black;">CVV</ion-label>
+
+      <ion-item>
+        <ion-label position="floating" style="font-weight: bold; color: black;">CVV</ion-label>
         <ion-input type="number" style="width: 30%;"></ion-input>
       </ion-item>
-   
-
+    </div>
   </div>
- 
-  
- 
- 
+  <button class="ion-button checkout-button" expand="full">Place Order</button>
 </ion-content>
+
 <ion-footer>
   <ion-toolbar>
-    <button class="ion-button checkout-button" expand="full" >Place Order</button>
-  </ion-toolbar>
-  <ion-toolbar>
-    <ion-tabs >
-      <ion-tab-bar >
-        <ion-tab-button tab="tab-go-back" >
+    <ion-tabs>
+      <ion-tab-bar>
+        <ion-tab-button tab="tab-go-back">
           <ion-icon name="arrow-back-outline"></ion-icon>
         </ion-tab-button>
-        <ion-tab-button tab="tab-home" >
+        <ion-tab-button tab="tab-home">
           <ion-icon name="home-outline"></ion-icon>
         </ion-tab-button>
-        <ion-tab-button tab="tab-account" >
+        <ion-tab-button tab="tab-account">
           <ion-icon name="person-outline"></ion-icon>
         </ion-tab-button>
       </ion-tab-bar>
     </ion-tabs>
   </ion-toolbar>
 </ion-footer>
-
