@@ -19,7 +19,8 @@ export class SignUpPage implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required],
-      termsAccepted: [false, Validators.requiredTrue]
+      termsAccepted: [false, Validators.requiredTrue],
+      userType: ['', Validators.required]
     }, {
       validators: this.validatePasswordConfirmation.bind(this)
     });
@@ -29,7 +30,8 @@ export class SignUpPage implements OnInit {
       email: '',
       password: '',
       confirmPassword: '',
-      termsAccepted: false
+      termsAccepted: false,
+      userType: ''
     });
   }
 
@@ -56,13 +58,7 @@ export class SignUpPage implements OnInit {
        
         this.router.navigate(['/sign-in']);
 
-        this.signupForm.patchValue({
-          name: '',
-          email: '',
-          password: '',
-          confirmPassword: '',
-          termsAccepted: false
-        });
+        this.signupForm.reset();
       },
       error => console.error('Error:', error)
       );
