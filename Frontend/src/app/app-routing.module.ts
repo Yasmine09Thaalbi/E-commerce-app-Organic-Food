@@ -55,6 +55,10 @@ const routes: Routes = [
     path: 'checkout',
     loadChildren: () => import('./pages/checkout/checkout.module').then( m => m.CheckoutPageModule)
   },
+  {
+    path: 'boss-account',
+    loadChildren: () => import('./pages/boss-account/boss-account.module').then( m => m.BossAccountPageModule)
+  },
 
 
 

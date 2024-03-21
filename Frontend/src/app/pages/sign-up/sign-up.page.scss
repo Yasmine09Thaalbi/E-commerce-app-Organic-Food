@@ -32,7 +32,7 @@ ion-item {
     width: 318px;
     height: 52px;
     margin-left: 33px;
-    margin-top: 20%;
+    margin-top: 10%;
     font-size: 16px;
     border-radius: 26px;
     padding: 14px, 18px, 14px, 18px ;
@@ -63,7 +63,45 @@ ion-checkbox::part(container) {
 }
 
 ion-label{
-    font-family: 'Poppins';
+    font-family: 'DM Sans';
+}
+
+ion-radio::part(container) {
+  width: 30px;
+  height: 30px;
+
+  border-radius: 15px;
+  border: 2px solid #ddd;
+}
+
+ion-radio::part(mark) {
+  background: none;
+  transition: none;
+  transform: none;
+  border-radius: 0;
+}
+
+ion-radio.radio-checked::part(container) {
+  background: #82C408;
+  border-color: transparent;
+}
+
+ion-radio.radio-checked::part(mark) {
+  width: 6px;
+  height: 10px;
+
+  border-width: 0px 2px 2px 0px;
+  border-style: solid;
+  border-color: #fff;
+
+  transform: rotate(45deg);
+}
+
+ion-radio {
+  font-weight: bold;
+  font-family: 'DM Sans';
+  font-size: 15px;
+  color: black;
 }
 .invalid ion-input {
     --border-color: red;
