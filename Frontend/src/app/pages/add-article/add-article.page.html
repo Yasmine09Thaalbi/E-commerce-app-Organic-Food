@@ -1,27 +1,41 @@
-
 <ion-content class="ion-padding">
-  <div class="login-form">
-  <h1 >Add Article </h1>
-    <ion-item>
-      <ion-label position="floating">Category</ion-label>
-      <ion-input aria-label="Category" type="Category"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating">Description</ion-label>
-      <ion-input aria-label="Description" type="Description"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating">Price</ion-label>
-      <ion-input aria-label="Price" type="Price" ></ion-input>
-    </ion-item>
-    <ion-item>
-      <label  for="file-upload"> Upload image</label>
-      <input id="file-upload" type="file" class="ion-hide">
-      <ion-icon name="camera" slot="end" ></ion-icon>
-    </ion-item>
-    <button class="ion-button" expand="full" > Add </button>
+  <div class="add-article-form">
+    <h1>Add Article</h1>
+
+    <form [formGroup]="articleForm" (ngSubmit)="submitForm()">
+      <ion-item>
+        <ion-select formControlName="category" class="always-flip" toggleIcon="caret-down-sharp" interface="popover" label="Category">
+          <ion-select-option value="vegetables">Vegetables</ion-select-option>
+          <ion-select-option value="fruits">Fruits</ion-select-option>
+          <ion-select-option value="bread">Bread</ion-select-option>
+          <ion-select-option value="meat">Meat</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Product Name</ion-label>
+        <ion-input formControlName="Product_Name" aria-label="Product Name" type="text"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Description</ion-label>
+        <ion-input formControlName="description" aria-label="Description" type="text"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Price</ion-label>
+        <ion-input formControlName="price" aria-label="Price" type="number"></ion-input>
+      </ion-item>
+      <ion-item>
+        <label  for="file-upload"> Upload image</label>
+        <input id="file-upload" type="file" class="ion-hide" (change)="onFileSelected($event)">
+        <ion-icon name="camera" slot="end" ></ion-icon>
+        
+
+      </ion-item>
+      <button  class="ion-button" expand="full" > Add </button>
+    </form>
+
   </div>
 </ion-content>
+
 <ion-footer>
   <ion-toolbar>
     <ion-tabs >
