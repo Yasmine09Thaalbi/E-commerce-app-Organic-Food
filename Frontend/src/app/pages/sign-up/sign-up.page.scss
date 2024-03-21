@@ -65,3 +65,7 @@ ion-checkbox::part(container) {
 ion-label{
     font-family: 'Poppins';
 }
+.invalid ion-input {
+    --border-color: red;
+  }
+  

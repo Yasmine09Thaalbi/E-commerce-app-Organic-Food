@@ -1,29 +1,41 @@
 <ion-content >
   <div class="signup-form">
     <h1>Create you account</h1>
-    <ion-item>
-      <ion-label position="floating">Full name</ion-label>
-      <ion-input aria-label="Full name" type="text"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating">Email Address</ion-label>
-      <ion-input aria-label="Email" type="email"> </ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating">Password</ion-label>
-      <ion-input aria-label="password" type="password"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating">Confirm password</ion-label>
-      <ion-input aria-label="password" type="password"></ion-input>
-    </ion-item>
+    <form name="signup-form" [formGroup]="signupForm"  (ngSubmit)="submitForm()">
+      <ion-item>
+        <ion-label position="floating" for="name">Full name</ion-label>
+        <ion-input aria-label="Full name" type="text" formControlName="name"></ion-input>
+      </ion-item>
 
-    <ion-item lines="none" style="margin-top: 50px;">
-      <ion-checkbox slot="start"></ion-checkbox>
-      <ion-label  style="color:black; font-size: small; font-weight: bold;">I understood the terms & policy.</ion-label>
-    </ion-item>
+      <ion-item>
+        <ion-label position="floating" for="email">Email Address</ion-label>
+        <ion-input aria-label="Email" type="email" formControlName="email"> </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating" for="password">Password</ion-label>
+        <ion-input aria-label="password" type="password" formControlName="password"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Confirm password</ion-label>
+        <ion-input aria-label="password" type="password" formControlName="confirmPassword"></ion-input>
+      </ion-item>
+      <div *ngIf="signupForm.get('password')?.value != signupForm.get('confirmPassword')?.value  && signupForm.get('confirmPassword')?.touched">
+        <p style="color: red; font-size: 11px;">Password does not match </p> 
+       </div>
+  
+      <ion-item lines="none" style="margin-top: 50px;">
+        <ion-checkbox slot="start" formControlName="termsAccepted"></ion-checkbox>
+        <ion-label  style="color:black; font-size: small; font-weight: bold;">I understood the terms & policy.</ion-label>
+      </ion-item>
 
-    <button class="ion-button" expand="full">sign up</button>
+      <div *ngIf="signupForm.get('termsAccepted')?.errors && signupForm.get('termsAccepted')?.touched">
+        <p style="color: red;">You must accept the terms and policy.</p>
+      </div>
+  
+      <button type="submit" class="ion-button" expand="full" [disabled]="signupForm.invalid">sign up</button>
+
+    </form> 
+    
     <p>have an account? <ion-router-link routerLink="/sign-in" style="color:black; font-weight: bold;">sign in</ion-router-link></p>
 
   </div>
