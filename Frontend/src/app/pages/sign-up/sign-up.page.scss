@@ -103,3 +103,7 @@ ion-radio {
   font-size: 15px;
   color: black;
 }
+.invalid ion-input {
+    --border-color: red;
+  }
+  

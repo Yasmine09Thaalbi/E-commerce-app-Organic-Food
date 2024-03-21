@@ -6,18 +6,20 @@
   <div class="login-form">
     <h1 >Welcome Back!</h1>
     <p class="p1">Sign in to your account</p>
-    <ion-item>
-      <ion-label position="floating">Email Address</ion-label>
-      <ion-input aria-label="Email" type="email"> </ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating">Password</ion-label>
-      <ion-input aria-label="password" type="password"></ion-input>
-    </ion-item>
-    <button class="ion-button" expand="full" >Login</button>
-    <p class="p2">Don't have an account?  
-      <ion-router-link routerLink="/sign-up" style="color:black; font-weight: bold;">sign up</ion-router-link>
-    </p>
+    <form name="login-form" [formGroup]="loginForm"  (ngSubmit)="onSubmit()">
 
+      <ion-item>
+        <ion-label position="floating">Email Address</ion-label>
+        <ion-input aria-label="Email" type="email" formControlName="email"> </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Password</ion-label>
+        <ion-input aria-label="password" type="password" formControlName="password"></ion-input>
+      </ion-item>
+      <button class="ion-button" expand="full" >Login</button>
+    </form>
+    
+    
+    <p class="p2">Don't have an account? <ion-router-link routerLink="/sign-up" style="color:black; font-weight: bold;">sign up</ion-router-link></p>
   </div>
 </ion-content>
