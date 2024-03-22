@@ -49,6 +49,10 @@ export class SignUpPage implements OnInit {
   submitForm() {
     if (this.signupForm.valid) {
       const formValueToSend = { ...this.signupForm.value };
+
+      if (formValueToSend.userType === 'seller') {
+        formValueToSend.canSell = false;
+      } 
       delete formValueToSend.confirmPassword;
   
      

@@ -5,6 +5,7 @@ from base64 import b64encode , b64decode
 from bson import ObjectId
 
 
+
 app = Flask(__name__)
 CORS(app)
 
@@ -17,12 +18,15 @@ products_collection = db["products"]
 
 @app.route('/API/signup', methods=['POST'])
 def signup():
-    data = request.json  
+    data = request.json    
     print(data)
+    # Insérer les données dans la collection
     result = collection.insert_one(data)
     print("Data inserted with ID:", result.inserted_id)
 
-    return jsonify('data inserted successful')
+    return jsonify('Data inserted successfully')
+
+
 
 @app.route('/API/login', methods=['GET'])
 def login():
@@ -31,9 +35,16 @@ def login():
     user = collection.find_one({'email': email, 'password': password})
 
     if user:
-        return jsonify('Login successful')
+        response_data = {
+            'userId': str(user['_id']),  # Convert ObjectId to string
+            'userType': user['userType']
+        }
+
+        return jsonify(response_data)
     else:
         return jsonify('Login failed')
+
+
 
 
 @app.route('/API/add_article', methods=['POST'])
@@ -71,5 +82,43 @@ def get_all_products():
         products_list.append(product)
     return jsonify(products_list)
 
+
+@app.route('/API/user/<user_id>', methods=['GET'])
+def get_user_by_id(user_id):
+    user = collection.find_one({'_id': ObjectId(user_id)})
+    if user:
+        user['_id'] = str(user['_id'])
+        return jsonify(user)
+    else:
+        return jsonify({'error': 'User not found'}), 404
+
+
+
+@app.route('/API/articles/<seller_id>', methods=['GET'])
+def get_articles_by_seller(seller_id):
+    products = products_collection.find({'id_Seller': seller_id})
+    products_list = []
+    for product in products:
+        product['_id'] = str(product['_id'])  # Convert ObjectId to string
+        products_list.append(product)
+    return jsonify(products_list)
+
+@app.route('/API/update_profile/<user_id>', methods=['PUT'])
+def update_profile(user_id):
+    # Récupérer les données mises à jour depuis la requête HTTP
+    updated_profile = request.json
+    
+    # Mettre à jour le profil de l'utilisateur dans la base de données
+    result = collection.update_one(
+        {'_id': ObjectId(user_id)},
+        {'$set': updated_profile}
+    )
+
+    if result.modified_count == 1:
+        return jsonify({'message': 'Profile updated successfully'}), 200
+    else:
+        return jsonify({'error': 'Failed to update profile'}), 500
+
+   
 if __name__ == "__main__":
     app.run(debug=True)

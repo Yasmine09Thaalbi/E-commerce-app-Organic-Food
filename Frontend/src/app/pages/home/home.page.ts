@@ -33,6 +33,7 @@ export class HomePage {
     this.http.get<any[]>('http://localhost:5000/API/products/all').subscribe(
       (response) => {
         this.products = response;
+        console.log(this.products)
       },
       (error) => {
         console.error('Error fetching all products:', error);

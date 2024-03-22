@@ -20,7 +20,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/sign-in/sign-in.module').then( m => m.SignInPageModule)
   },
     {
-    path: 'edit-profile',
+    path: 'edit-profile/:id_seller',
     loadChildren: () => import('./pages/edit-profile/edit-profile.module').then( m => m.EditProfilePageModule)
   },
   {
@@ -29,7 +29,7 @@ const routes: Routes = [
   },
 
   {
-    path: 'add-article',
+    path: 'add-article/:id_seller',
     loadChildren: () => import('./pages/add-article/add-article.module').then( m => m.AddArticlePageModule)
   },
   {
@@ -37,17 +37,18 @@ const routes: Routes = [
     loadChildren: () => import('./pages/add-seller/add-seller.module').then( m => m.AddSellerPageModule)
   },
   {
-    path: 'customer-account',
+    path: 'customer-account/:id',
     loadChildren: () => import('./pages/customer-account/customer-account.module').then( m => m.CustomerAccountPageModule)
   },
   {
-    path: 'seller-account',
+    path: 'seller-account/:id',
     loadChildren: () => import('./pages/seller-account/seller-account.module').then( m => m.SellerAccountPageModule)
   },
   {
     path: 'description-page',
     loadChildren: () => import('./pages/description-page/description-page.module').then( m => m.DescriptionPagePageModule)
-  },  {
+  },
+  {
     path: 'cart-page',
     loadChildren: () => import('./pages/cart-page/cart-page.module').then( m => m.CartPagePageModule)
   },
@@ -56,7 +57,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/checkout/checkout.module').then( m => m.CheckoutPageModule)
   },
   {
-    path: 'boss-account',
+    path: 'boss-account/:id',
     loadChildren: () => import('./pages/boss-account/boss-account.module').then( m => m.BossAccountPageModule)
   },
 

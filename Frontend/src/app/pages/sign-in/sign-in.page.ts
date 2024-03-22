@@ -29,11 +29,26 @@ export class SignInPage implements OnInit {
   onSubmit() {
     if (this.loginForm.valid) {
       const formData = this.loginForm.value;
-      this.authService.login_get_request(formData.email , formData.password).subscribe(
-        response => {
+      this.authService.login_get_request(formData.email, formData.password).subscribe(
+        (response: any) => {
           console.log(response);
-          this.router.navigate(['/home']);
-
+          const userId = response.userId;
+          const userType = response.userType; 
+          switch (userType) {
+            case 'customer':
+              this.router.navigate([`/customer-account/${userId}`]);
+              break;
+            case 'seller':
+              this.router.navigate([`/seller-account/${userId}`]);
+              break;
+            case 'boss':
+              this.router.navigate([`/boss-account/${userId}`]);
+              break;
+            default:
+              console.error('Invalid user type');
+              break;
+          }
+  
           this.loginForm.patchValue({
             email: '',
             password: ''
@@ -41,10 +56,11 @@ export class SignInPage implements OnInit {
         },
         error => {
           console.error('Error:', error);
-          
         }
       );
     } 
   }
+  
+  
   
 }

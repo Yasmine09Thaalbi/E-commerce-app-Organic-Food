@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-article',
@@ -14,11 +14,13 @@ export class AddArticlePage implements OnInit {
   articleForm!: FormGroup;
   @ViewChild('fileInput') fileInput: any;
   selectedImageFile: File | undefined;
+  userId: any;
 
   constructor(
     private formBuilder: FormBuilder,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.articleForm = this.formBuilder.group({
       category: ['', Validators.required],
@@ -28,7 +30,9 @@ export class AddArticlePage implements OnInit {
     });
   }
   
-  ngOnInit() {}
+  ngOnInit() {
+    this.userId = this.route.snapshot.paramMap.get('id_seller');
+  }
 
   async submitForm() {
     if (this.articleForm.valid) {
@@ -39,6 +43,7 @@ export class AddArticlePage implements OnInit {
       formData.append('Product_Name', articleData.Product_Name);
       formData.append('description', articleData.description);
       formData.append('price', articleData.price);
+      formData.append('id_Seller', this.userId); 
       
       if (this.selectedImageFile) {
         formData.append('image', this.selectedImageFile, this.selectedImageFile.name);
