@@ -1,17 +1,16 @@
 <ion-content class="ion-padding">
-  
   <ion-card>
-    <ion-img src="assets/images/red-onions.png"></ion-img>
+    <ion-img [src]="decodedImage"></ion-img>
     <ion-card-header>
-      <ion-card-title>Red Onions  <ion-icon name="remove-circle" color="medium"></ion-icon> 4  <ion-icon name="add-circle" style="color:  #82C408;"></ion-icon>
+      <ion-card-title>{{ product.Product_Name }}<ion-icon name="remove-circle" color="medium"></ion-icon> 4  <ion-icon name="add-circle" style="color:  #82C408;"></ion-icon>
       </ion-card-title>
     </ion-card-header>
     <ion-card-content>
      <h1 style="color: black;">Description</h1> 
-      Red onions are high in antioxidants and can be eaten raw or cooked. They are often used in salads due to their mild flavor compared to other types of onions.
+     {{ product.description }}
     </ion-card-content>
   </ion-card>
-  <button class="ion-button" expand="full" > Add to  cart </button>
+  <button class="ion-button" expand="full" >Add to  cart</button>
 </ion-content>
 <ion-footer>
   <ion-toolbar>

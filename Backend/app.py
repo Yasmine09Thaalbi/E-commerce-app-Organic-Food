@@ -1,7 +1,8 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import pymongo
-from base64 import b64encode
+from base64 import b64encode , b64decode
+from bson import ObjectId
 
 
 app = Flask(__name__)
@@ -46,6 +47,29 @@ def add_article():
     products_collection.insert_one(data)
     return jsonify({"message": "Article added successfully"}), 200
 
+
+@app.route('/API/products/<category>', methods=['GET'])
+def get_products_by_category(category):
+    # Assuming you have retrieved products from MongoDB for the specified category
+    products = products_collection.find({'category': category})
+
+    # Convert MongoDB cursor to a list of dictionaries
+    products_list = []
+    for product in products:
+        # Convert ObjectId to string
+        product['_id'] = str(product['_id'])
+        products_list.append(product)
+
+    return jsonify(products_list)
+
+@app.route('/API/products/all', methods=['GET'])
+def get_all_products():
+    products = products_collection.find({})
+    products_list = []
+    for product in products:
+        product['_id'] = str(product['_id'])  # Convert ObjectId to string
+        products_list.append(product)
+    return jsonify(products_list)
 
 if __name__ == "__main__":
     app.run(debug=True)
