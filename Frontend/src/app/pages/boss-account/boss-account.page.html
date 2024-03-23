@@ -8,11 +8,11 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="user">
   <div class="centered">
     <ion-img src="assets/images/boss-picture.png"></ion-img>
-    <ion-label class="user-name">Boss</ion-label>
-    <ion-label class="user-email">boss&#64;gmail.com</ion-label>
+    <ion-label class="user-name">{{ user.name }}</ion-label>
+    <ion-label class="user-email">{{ user.email }}</ion-label>
     <div class="button-container">
       <button class="custom-button" expand="full" (click)="GoProfilePage()">edit profile</button>
       <button class="custom-button" expand="full" (click)="GoAddSellerPage()">add seller</button>
@@ -20,13 +20,13 @@
   </div>
 
   <p>Sellers</p>
-  <ion-card class="sellers-card">
+  <ion-card class="sellers-card"  *ngFor="let s of sellers">
     <ion-item>
       <ion-thumbnail slot="start">
         <ion-img src="assets/images/seller-picture.png"></ion-img>
       </ion-thumbnail>
-      <ion-label>SellerName</ion-label>
-      <ion-label class="email">SellerEmail</ion-label>
+      <ion-label>{{ s.name }}</ion-label>
+      <ion-label class="email">{{ s.email }}</ion-label>
 
       <ion-buttons slot="end">
         <ion-button (click)="editSeller()">

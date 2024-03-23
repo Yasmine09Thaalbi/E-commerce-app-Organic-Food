@@ -119,6 +119,17 @@ def update_profile(user_id):
     else:
         return jsonify({'error': 'Failed to update profile'}), 500
 
+@app.route('/API/sellers', methods=['GET'])
+def get_seller_users():
+    filtre = {"userType": "seller", "canSell": True}
+    utilisateurs = collection.find(filtre)
+
+    liste_utilisateurs = []
+    for  utilisateur in utilisateurs:
+        utilisateur['_id'] = str(utilisateur['_id'])  # Convert ObjectId to string
+        liste_utilisateurs.append(utilisateur)
+    
+    return jsonify(liste_utilisateurs)
    
 if __name__ == "__main__":
     app.run(debug=True)

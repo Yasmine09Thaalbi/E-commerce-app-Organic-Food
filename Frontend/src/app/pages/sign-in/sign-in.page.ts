@@ -41,7 +41,7 @@ export class SignInPage implements OnInit {
             case 'seller':
               this.router.navigate([`/seller-account/${userId}`]);
               break;
-            case 'boss':
+            case 'Boss':
               this.router.navigate([`/boss-account/${userId}`]);
               break;
             default:

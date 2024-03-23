@@ -54,7 +54,7 @@ export class AddArticlePage implements OnInit {
           async (response) => {
             console.log(response);
             window.alert('Data inserted successfully');
-            this.router.navigate(['/seller-account']);
+            this.router.navigate([`/seller-account/${this.userId}`]);
           },
           (error) => {
             console.error(error);
