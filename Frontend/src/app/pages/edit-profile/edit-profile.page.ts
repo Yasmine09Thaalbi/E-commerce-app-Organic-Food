@@ -43,6 +43,13 @@ export class EditProfilePage implements OnInit {
         .subscribe(
           response => {
             console.log(response);
+            
+            if (response.userType === 'seller') {
+              this.router.navigate([`/seller-account/${this.userId}`]);
+            } else if (response.userType === 'customer') {
+              this.router.navigate([`/customer-account/${this.userId}`]);
+            }
+
 
             this.updateForm.reset();
           },

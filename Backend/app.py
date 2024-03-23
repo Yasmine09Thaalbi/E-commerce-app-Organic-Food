@@ -138,10 +138,27 @@ def update_profile(user_id):
 
     result = collection.update_one({'_id': ObjectId(user_id)}, {'$set': updated_profile})
     if result.modified_count == 1:
-        return jsonify({'message': 'Profile updated successfully'}), 200
+        userType = get_user_type(user_id)
+
+        # Construct response data with updated profile and userType
+        response_data = {
+            'message': 'Profile updated successfully',
+            'userType': userType
+        }
+        return jsonify(response_data), 200
     else:
         return jsonify({'error': 'Failed to update profile'}), 500
     
+
+
+## FONCTION TO RETURN THE USER TYPE ##
+def get_user_type(user_id):
+    user = collection.find_one({'_id': ObjectId(user_id)})
+    if user:
+        return user.get('userType')
+    else:
+        return None
+
 
 
 @app.route('/API/sellers', methods=['GET'])

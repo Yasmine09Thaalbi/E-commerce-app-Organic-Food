@@ -1,5 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-customer-account',
@@ -7,22 +8,40 @@ import { Router } from '@angular/router';
   styleUrls: ['./customer-account.page.scss'],
 })
 export class CustomerAccountPage implements OnInit {
-  logout() {}
-  GoProfilePage() {
-    this.router.navigate(['/edit-profile']);
+  user: any;
+  userId: any;
+
+  constructor(private router: Router ,private route: ActivatedRoute, private http: HttpClient) { }
+
+  ngOnInit() {
+    this.userId = this.route.snapshot.paramMap.get('id');
+
+    this.http.get<any>(`http://localhost:5000/API/user/${this.userId}`)
+      .subscribe(response => {
+        this.user = response;
+        console.log(response);
+      });
   }
+
+  getBase64Image(encodedImage: string): string {
+    return 'data:image/jpeg;base64,' + encodedImage;
+  }
+
+  logout() {}
+
+  GoEditProfilePage() {
+    this.router.navigate([`/edit-profile/${this.userId}`]);
+  }
+
   goToAccountPage() {
   }
+
+  
   goToHomePage() {
     this.router.navigate(['/home']);
   }
   goBack() {
   }
 
-  constructor(private router: Router) { }
-
-
-  ngOnInit() {
-  }
 
 }

@@ -8,16 +8,16 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="user">
   <div class="centered">
-    <ion-img src="assets/images/customer-picture.png"></ion-img>
-    <ion-label class="user-name">Customer</ion-label>
-    <ion-label class="user-email">customer&#64;gmail.com</ion-label>
-    <button class="custom-button" expand="full" (click)="GoProfilePage()">edit profile</button>
+    <ion-img class="profileImage" [src]="getBase64Image(user.image)"></ion-img>
+    <ion-label class="user-name">{{ user.name }}</ion-label>
+    <ion-label class="user-email">{{ user.email }}</ion-label>
+    <button class="custom-button" expand="full" (click)="GoEditProfilePage()">edit profile</button>
   </div>
 
 
-  <p>My purchases</p>
+  <p>My Orders</p>
   <ion-card class="purchase-card">
     <ion-item>
       <ion-thumbnail slot="start">
