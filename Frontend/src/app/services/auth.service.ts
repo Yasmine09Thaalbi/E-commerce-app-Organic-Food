@@ -10,13 +10,12 @@ export class AuthService {
   }
   private serverAddress = 'http://localhost:5000/API';
 
-  signup_post_request(data: any) {
+  signup_post_request(formData: FormData) {
     return this.http.post(
-      `${this.serverAddress}/signup`,
-      JSON.stringify(data),
-      { headers: { 'Content-Type': 'application/json' } }
+      `${this.serverAddress}/signup`,formData
     );
   }
+  
   login_get_request(email: string, password: string) {
     const params = new HttpParams()
     .set('email', email)

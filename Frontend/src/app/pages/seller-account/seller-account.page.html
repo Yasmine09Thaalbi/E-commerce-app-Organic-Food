@@ -10,7 +10,7 @@
 
 <ion-content *ngIf="user">
   <div class="centered">
-    <ion-img src="assets/images/seller-picture.png"></ion-img>
+    <ion-img class="profileImage" [src]="getBase64Image(user.image)"></ion-img>
     <ion-label class="user-name">{{ user.name }}</ion-label>
     <ion-label class="user-email">{{ user.email }}</ion-label>
     <div class="button-container">

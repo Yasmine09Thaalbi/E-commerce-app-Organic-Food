@@ -1,19 +1,23 @@
 <ion-content class="ion-padding">
   <div class="login-form">
     <h1>Edit Profile</h1>
+    <form [formGroup]="updateForm" (ngSubmit)="submitForm()">
     <ion-item>
-      <ion-label position="floating">Name</ion-label>
-      <ion-input aria-label="Name" type="name" [(ngModel)]="newName"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating">Email Address</ion-label>
-      <ion-input aria-label="Email" type="email" [(ngModel)]="newEmail"></ion-input>
+      <ion-label position="floating">New Name</ion-label>
+      <ion-input aria-label="Name" type="name" formControlName="newName"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="floating">New Password</ion-label>
-      <ion-input aria-label="New Password" type="password" [(ngModel)]="newPassword"></ion-input>
+      <ion-input aria-label="New Password" type="password" formControlName="newPassword"></ion-input>
     </ion-item>
-    <button class="ion-button" expand="full" (click)="updateProfile()">Edit</button>
+    <ion-item style="margin-top: 25px;">
+      <label  for="file-upload">Upload New Profile image</label>
+      <input id="file-upload" name="image" type="file" class="ion-hide" (change)="onFileSelected($event)">
+      <ion-icon name="camera" slot="end" ></ion-icon>
+    </ion-item>
+    
+    <button class="ion-button" expand="full" >Edit</button>
+    </form>
   </div>
 </ion-content>
 <ion-footer>

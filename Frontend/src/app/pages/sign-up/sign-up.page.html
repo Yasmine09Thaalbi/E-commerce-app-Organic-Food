@@ -19,24 +19,33 @@
         <ion-label position="floating">Confirm password</ion-label>
         <ion-input aria-label="password" type="password" formControlName="confirmPassword"></ion-input>
       </ion-item>
+
       <div *ngIf="signupForm.get('password')?.value != signupForm.get('confirmPassword')?.value  && signupForm.get('confirmPassword')?.touched">
         <p style="color: red; font-size: 11px;">Password does not match </p> 
        </div>
-      <ion-item lines="none"  style="margin-top: 40px;">
+
+      <ion-item style="margin-top: 25px;">
+        <label  for="file-upload"> Upload Profile image</label>
+        <input id="file-upload" name="image" type="file" class="ion-hide" (change)="onFileSelected($event)">
+        <ion-icon name="camera" slot="end" ></ion-icon>
+      </ion-item>
+      
+      <ion-item lines="none"  style="margin-top: 35px;">
         <ion-radio-group formControlName="userType" style="display: flex; flex-direction: row; align-items: center;">
             <ion-radio value="customer">Customer</ion-radio>
             <ion-radio value="seller" style="margin-left: 50px;">Seller</ion-radio>
         </ion-radio-group> 
     </ion-item>
-    <ion-item lines="none" style="margin-top: 45px;">
+
+    <ion-item lines="none" style="margin-top: 20px;">
         <ion-checkbox slot="start" formControlName="termsAccepted" style="color:black; font-size: small; font-weight: bold;">I understood the terms & policy.</ion-checkbox>
     </ion-item>
 
-      <div *ngIf="signupForm.get('termsAccepted')?.errors && signupForm.get('termsAccepted')?.touched">
-        <p style="color: red;">You must accept the terms and policy.</p>
-      </div>
+    <div *ngIf="signupForm.get('termsAccepted')?.errors && signupForm.get('termsAccepted')?.touched">
+      <p style="color: red;">You must accept the terms and policy.</p>
+    </div>
   
-      <button type="submit" class="ion-button" expand="full" [disabled]="signupForm.invalid">sign up</button>
+    <button type="submit" class="ion-button" expand="full" [disabled]="signupForm.invalid">sign up</button>
 
     </form> 
     

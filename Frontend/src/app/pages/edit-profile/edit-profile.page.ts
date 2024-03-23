@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-edit-profile',
@@ -9,44 +10,65 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class EditProfilePage implements OnInit {
 
-  goToAccountPage() {
-    throw new Error('Method not implemented.');
-    }
-    goToHomePage() {
-    throw new Error('Method not implemented.');
-    }
-    goBack() {
-    throw new Error('Method not implemented.');
-    }
+    @ViewChild('fileInput') fileInput: any;
+    selectedImageFile: File | undefined;
+    updateForm!: FormGroup;
     userId: any;
-    newName!: string;
-    newEmail!: string;
-    newPassword!: string;
-  
-    constructor(private http: HttpClient, private route: ActivatedRoute) { }
+
+    constructor( private formBuilder: FormBuilder, private http: HttpClient,private router: Router,private route: ActivatedRoute) {
+      this.updateForm = this.formBuilder.group({
+        newName: ['', Validators.required],
+        newPassword: ['', Validators.required],
+      });
+    }
   
     ngOnInit() {
       this.userId = this.route.snapshot.paramMap.get('id_seller');
     }
   
-    updateProfile() {
-      const updatedProfile = {
-        name: this.newName,
-        email: this.newEmail,
-        password: this.newPassword
-      };
+    submitForm() {
+      if (this.updateForm.valid) {
+      const updatedProfile = new FormData();
+      const updateData = this.updateForm.value;
+
+      updatedProfile.append('name', updateData.newName);
+      updatedProfile.append('password', updateData.newPassword);
+    
+      if (this.selectedImageFile) {
+        updatedProfile.append('image', this.selectedImageFile, this.selectedImageFile.name);
+      }
+    
   
       this.http.put<any>(`http://localhost:5000/API/update_profile/${this.userId}`, updatedProfile)
         .subscribe(
           response => {
             console.log(response);
-            // Gérer la réponse en fonction de vos besoins
+
+            this.updateForm.reset();
           },
           error => {
             console.error('Error updating profile:', error);
-            // Gérer l'erreur en fonction de vos besoins
           }
         );
+      }
+    }
+
+
+    onFileSelected(event: any) {
+      const file: File = event.target.files[0];
+      if (file) {
+        this.selectedImageFile = file;
+      }
+    }
+
+    goToAccountPage() {
+    throw new Error('Method not implemented.');
+    }
+    goToHomePage() {
+      this.router.navigate(['/home']);
+    }
+    goBack() {
+    throw new Error('Method not implemented.');
     }
 
 }

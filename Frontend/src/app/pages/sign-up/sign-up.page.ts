@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 
@@ -9,30 +9,23 @@ import { Router } from '@angular/router';
   styleUrls: ['./sign-up.page.scss'],
 })
 export class SignUpPage implements OnInit {
-    signupForm!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private auth: AuthService , private router: Router) { }
+  signupForm!: FormGroup;
+  @ViewChild('fileInput') fileInput: any;
+  selectedImageFile: File | undefined;
 
-  ngOnInit() {
+  constructor(private auth: AuthService,private formBuilder: FormBuilder,private router: Router) {
     this.signupForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required],
-      termsAccepted: [false, Validators.requiredTrue],
-      userType: ['', Validators.required]
-    }, {
-      validators: this.validatePasswordConfirmation.bind(this)
+      userType: ['', Validators.required],
+      termsAccepted: [false, Validators.requiredTrue]
     });
+  }
 
-    this.signupForm.patchValue({
-      name: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
-      termsAccepted: false,
-      userType: ''
-    });
+  ngOnInit() {
   }
 
   validatePasswordConfirmation(formGroup: FormGroup): { [key: string]: boolean } | null {
@@ -48,16 +41,27 @@ export class SignUpPage implements OnInit {
 
   submitForm() {
     if (this.signupForm.valid) {
-      const formValueToSend = { ...this.signupForm.value };
+      const formData = new FormData();
+      const signupFormData = this.signupForm.value;
 
-      if (formValueToSend.userType === 'seller') {
-        formValueToSend.canSell = false;
+      if (signupFormData.userType === 'seller') {
+        signupFormData.canSell = false;
       } 
-      delete formValueToSend.confirmPassword;
+
+      delete signupFormData.confirmPassword;
   
      
-      console.log(formValueToSend);
-      this.auth.signup_post_request(formValueToSend).subscribe( response => {
+      formData.append('name', signupFormData.name);
+      formData.append('email', signupFormData.email);
+      formData.append('password', signupFormData.password);
+      formData.append('userType', signupFormData.userType);
+      formData.append('termsAccepted', signupFormData.termsAccepted);
+   
+      if (this.selectedImageFile) {
+        formData.append('image', this.selectedImageFile, this.selectedImageFile.name);
+      }
+
+      this.auth.signup_post_request(formData).subscribe( response => {
         console.log(response);
        
         this.router.navigate(['/sign-in']);
@@ -68,5 +72,12 @@ export class SignUpPage implements OnInit {
       );
   
     } 
+  }
+
+  onFileSelected(event: any) {
+    const file: File = event.target.files[0];
+    if (file) {
+      this.selectedImageFile = file;
+    }
   }
 }
