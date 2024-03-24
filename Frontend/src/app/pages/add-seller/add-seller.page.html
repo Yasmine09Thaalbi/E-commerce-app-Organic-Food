@@ -4,31 +4,27 @@
   <h1 >Add Seller </h1>
     <ion-item>
       <ion-label position="floating" >Name</ion-label>
-      <ion-input aria-label="Name" type="Name" ></ion-input>
+      <ion-input aria-label="Name" type="Name" [(ngModel)]="name" ></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Email</ion-label>
-      <ion-input aria-label="email" type="email"></ion-input>
+      <ion-input aria-label="email" type="email" [(ngModel)]="email"></ion-input>
     </ion-item>
-    <ion-item>
-      <label  for="file-upload"> Profile image</label>
-      <input id="file-upload" type="file" class="ion-hide">
-      <ion-icon name="camera" slot="end" ></ion-icon>
-    </ion-item>
-    <button class="ion-button" expand="full" > Add </button>
+    
+    <button class="ion-button" expand="full" (click)="addSeller()" > Add </button>
   </div>
 </ion-content>
 <ion-footer>
   <ion-toolbar>
     <ion-tabs >
       <ion-tab-bar >
-        <ion-tab-button tab="tab-go-back" (click)="goBack()">
+        <ion-tab-button  (click)="goBack()">
           <ion-icon name="arrow-back-outline"></ion-icon>
         </ion-tab-button>
-        <ion-tab-button tab="tab-home" (click)="goToHomePage()">
+        <ion-tab-button  (click)="goToHomePage()">
           <ion-icon name="home-outline"></ion-icon>
         </ion-tab-button>
-        <ion-tab-button tab="tab-account" (click)="goToAccountPage()">
+        <ion-tab-button  (click)="goToAccountPage()">
           <ion-icon name="person-outline"></ion-icon>
         </ion-tab-button>
       </ion-tab-bar>

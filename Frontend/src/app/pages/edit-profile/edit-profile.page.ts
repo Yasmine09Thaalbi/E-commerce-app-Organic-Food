@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-edit-profile',
@@ -15,7 +16,7 @@ export class EditProfilePage implements OnInit {
     updateForm!: FormGroup;
     userId: any;
 
-    constructor( private formBuilder: FormBuilder, private http: HttpClient,private router: Router,private route: ActivatedRoute) {
+    constructor( private formBuilder: FormBuilder, private http: HttpClient,private router: Router,private route: ActivatedRoute,private location: Location) {
       this.updateForm = this.formBuilder.group({
         newName: ['', Validators.required],
         newPassword: ['', Validators.required],
@@ -44,11 +45,12 @@ export class EditProfilePage implements OnInit {
           response => {
             console.log(response);
             
-            if (response.userType === 'seller') {
-              this.router.navigate([`/seller-account/${this.userId}`]);
-            } else if (response.userType === 'customer') {
-              this.router.navigate([`/customer-account/${this.userId}`]);
-            }
+            // if (response.userType === 'seller') {
+            //   this.router.navigate([`/seller-account/${this.userId}`]);
+            // } else if (response.userType === 'customer') {
+            //   this.router.navigate([`/customer-account/${this.userId}`]);
+            // }
+            this.location.back();
 
 
             this.updateForm.reset();
@@ -69,13 +71,13 @@ export class EditProfilePage implements OnInit {
     }
 
     goToAccountPage() {
-    throw new Error('Method not implemented.');
+      this.location.back();
     }
     goToHomePage() {
       this.router.navigate(['/home']);
     }
     goBack() {
-    throw new Error('Method not implemented.');
+      this.location.back();
     }
 
 }

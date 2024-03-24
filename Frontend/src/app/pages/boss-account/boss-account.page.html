@@ -10,7 +10,7 @@
 
 <ion-content *ngIf="user">
   <div class="centered">
-    <ion-img src="assets/images/boss-picture.png"></ion-img>
+    <ion-img [src]="getBase64Image(user.image)"></ion-img>
     <ion-label class="user-name">{{ user.name }}</ion-label>
     <ion-label class="user-email">{{ user.email }}</ion-label>
     <div class="button-container">
@@ -23,16 +23,13 @@
   <ion-card class="sellers-card"  *ngFor="let s of sellers">
     <ion-item>
       <ion-thumbnail slot="start">
-        <ion-img src="assets/images/seller-picture.png"></ion-img>
+        <ion-img [src]="getBase64Image(s.image)"></ion-img>
       </ion-thumbnail>
       <ion-label>{{ s.name }}</ion-label>
       <ion-label class="email">{{ s.email }}</ion-label>
 
       <ion-buttons slot="end">
-        <ion-button (click)="editSeller()">
-          <ion-icon  class="custom-pencil-icon" name="pencil"></ion-icon>
-        </ion-button>
-        <ion-button (click)="deleteSeller()">
+        <ion-button (click)="deleteSeller(s._id)">
           <ion-icon class="custom-icon" name="close-circle"></ion-icon>
         </ion-button>
       </ion-buttons>
@@ -45,13 +42,13 @@
   <ion-toolbar>
     <ion-tabs >
       <ion-tab-bar >
-        <ion-tab-button tab="tab-go-back" (click)="goBack()">
+        <ion-tab-button  (click)="goBack()">
           <ion-icon name="arrow-back-outline"></ion-icon>
         </ion-tab-button>
-        <ion-tab-button tab="tab-home" (click)="goToHomePage()">
+        <ion-tab-button  (click)="goToHomePage()">
           <ion-icon name="home-outline"></ion-icon>
         </ion-tab-button>
-        <ion-tab-button tab="tab-account" (click)="goToAccountPage()">
+        <ion-tab-button  (click)="goToAccountPage()">
           <ion-icon name="person-outline"></ion-icon>
         </ion-tab-button>
       </ion-tab-bar>

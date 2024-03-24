@@ -172,6 +172,41 @@ def get_seller_users():
         liste_utilisateurs.append(utilisateur)
     
     return jsonify(liste_utilisateurs)
-   
+
+@app.route('/API/products/<product_id>', methods=['PUT'])
+def update_product_quantity(product_id):
+    new_quantity = request.json.get('quantity')
+    result = products_collection.update_one(
+        {'_id': ObjectId(product_id)},
+        {'$set': {'quantity': new_quantity}}
+    )
+
+    if result.modified_count == 1:
+        return jsonify({'message': 'Quantity updated successfully'}), 200
+    else:
+        return jsonify({'error': 'Failed to update quantity'}), 500
+
+@app.route('/API/addseller', methods=['PUT'])
+def add_seller():
+    name = request.json.get('name')
+    email = request.json.get('email')
+    cansell = request.json.get('cansell')
+    user = collection.find_one({'name': name, 'email': email , 'userType': seller})
+
+    if user:
+        result = collection.update_one({'_id': user['_id']}, {'$set': {'canSell': cansell}})
+        return jsonify('Seller updated successfully')
+    
+    else:
+        return jsonify('Seller not found'), 404
+
+@app.route('/API/seller/<seller_id>', methods=['DELETE'])
+def delete_seller(seller_id):
+    # Supprimer le vendeur avec l'ID spécifié de la base de données
+    result = collection.delete_one({'_id': ObjectId(seller_id)})
+    if result.deleted_count == 1:
+        return jsonify('Seller deleted successfully')
+    else:
+        return jsonify('Seller not found'), 404
 if __name__ == "__main__":
     app.run(debug=True)

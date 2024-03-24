@@ -23,6 +23,10 @@
         <ion-label position="floating">Price</ion-label>
         <ion-input formControlName="price" aria-label="Price" type="number"></ion-input>
       </ion-item>
+      <ion-item>
+        <ion-label position="floating">Quantity</ion-label>
+        <ion-input formControlName="quantity" aria-label="quantity" type="number"></ion-input>
+      </ion-item>
       <ion-item> 
         <label  for="file-upload"> Upload image</label>
         <input id="file-upload" type="file" class="ion-hide" (change)="onFileSelected($event)">
@@ -40,13 +44,13 @@
   <ion-toolbar>
     <ion-tabs >
       <ion-tab-bar >
-        <ion-tab-button tab="tab-go-back" (click)="goBack()">
+        <ion-tab-button  (click)="goBack()">
           <ion-icon name="arrow-back-outline"></ion-icon>
         </ion-tab-button>
-        <ion-tab-button tab="tab-home" (click)="goToHomePage()">
+        <ion-tab-button  (click)="goToHomePage()">
           <ion-icon name="home-outline"></ion-icon>
         </ion-tab-button>
-        <ion-tab-button tab="tab-account" (click)="goToAccountPage()">
+        <ion-tab-button  (click)="goToAccountPage()">
           <ion-icon name="person-outline"></ion-icon>
         </ion-tab-button>
       </ion-tab-bar>

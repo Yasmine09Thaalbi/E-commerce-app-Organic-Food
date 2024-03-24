@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-seller-account',
@@ -11,7 +12,10 @@ export class SellerAccountPage implements OnInit {
   userId: any;
   user: any;
   products: any[] = [];
-  logout() {}
+  logout() {
+    this.router.navigate(['/intro']);
+   
+  }
   GoAddArticlePage() {
     this.router.navigate([`/add-article/${this.userId}`]);
   }
@@ -20,18 +24,21 @@ export class SellerAccountPage implements OnInit {
     this.router.navigate([`/edit-profile/${this.userId}`]);
   }
   goToAccountPage() {
+    window.location.reload();
+    
   }
   goToHomePage() {
     this.router.navigate(['/home']);
   }
   goBack() {
+    this.location.back();
   }
 
-  constructor(private router: Router ,private route: ActivatedRoute, private http: HttpClient) { }
+  constructor(private router: Router ,private route: ActivatedRoute, private http: HttpClient,private location: Location) { }
 
   ngOnInit() {
     this.userId = this.route.snapshot.paramMap.get('id');
-
+    console.log(this.userId)
     this.http.get<any>(`http://localhost:5000/API/user/${this.userId}`)
       .subscribe(response => {
         this.user = response;
@@ -56,8 +63,8 @@ export class SellerAccountPage implements OnInit {
 
 
   viewProductDescription(product: any) {
-    // Navigate to the description page and pass the product data
-    this.router.navigate(['/description-page'], { state: { product: product } });
-  }
+    const currentPath: string = this.router.url;
+    this.router.navigate(['/description-page'], { state: { product: product, path: currentPath }  });
+}
 
 }
