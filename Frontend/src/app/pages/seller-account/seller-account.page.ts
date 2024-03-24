@@ -12,12 +12,15 @@ export class SellerAccountPage implements OnInit {
   userId: any;
   user: any;
   products: any[] = [];
+  modified: boolean = false;
+ 
   logout() {
     this.router.navigate(['/intro']);
    
   }
   GoAddArticlePage() {
     this.router.navigate([`/add-article/${this.userId}`]);
+    
   }
 
   GoProfilePage() {
@@ -38,6 +41,30 @@ export class SellerAccountPage implements OnInit {
 
   ngOnInit() {
     this.userId = this.route.snapshot.paramMap.get('id');
+    this.route.queryParams.subscribe(params => {
+      this.modified = params['modified'] === 'true';
+      if (this.modified) {
+        
+        this.http.get<any>(`http://localhost:5000/API/user/${this.userId}`)
+      .subscribe(response => {
+        this.user = response;
+        console.log(response);
+      });
+
+      this.http.get<any[]>(`http://localhost:5000/API/articles/${this.userId}`)
+          .subscribe(
+          (response) => {
+            this.products = response;
+            console.log(this.products);
+          },
+          (error) => {
+            console.error(error);
+          }
+          );
+      
+        
+      }
+    });
     console.log(this.userId)
     this.http.get<any>(`http://localhost:5000/API/user/${this.userId}`)
       .subscribe(response => {

@@ -22,6 +22,7 @@ def signup():
     email = request.form.get('email')
     password = request.form.get('password')
     userType = request.form.get('userType')
+    canSell = request.form.get('canSell')
     termsAccepted = request.form.get('termsAccepted')
 
     # Construct the user document
@@ -30,6 +31,7 @@ def signup():
         'email': email,
         'password': password,
         'userType': userType,
+        'canSell': canSell,
         'termsAccepted': termsAccepted
     }
 
@@ -191,10 +193,11 @@ def add_seller():
     name = request.json.get('name')
     email = request.json.get('email')
     cansell = request.json.get('cansell')
-    user = collection.find_one({'name': name, 'email': email , 'userType': seller})
+    user = collection.find_one({'name': name, 'email': email , 'userType': 'seller'})
 
     if user:
         result = collection.update_one({'_id': user['_id']}, {'$set': {'canSell': cansell}})
+        
         return jsonify('Seller updated successfully')
     
     else:
@@ -202,11 +205,17 @@ def add_seller():
 
 @app.route('/API/seller/<seller_id>', methods=['DELETE'])
 def delete_seller(seller_id):
-    # Supprimer le vendeur avec l'ID spécifié de la base de données
+    products_deleted = products_collection.delete_many({'id_Seller': seller_id})
     result = collection.delete_one({'_id': ObjectId(seller_id)})
     if result.deleted_count == 1:
-        return jsonify('Seller deleted successfully')
+        return jsonify({
+            'message': 'Seller and associated products deleted successfully',
+            'products_deleted': products_deleted.deleted_count
+        })
     else:
         return jsonify('Seller not found'), 404
+
+
+
 if __name__ == "__main__":
     app.run(debug=True)

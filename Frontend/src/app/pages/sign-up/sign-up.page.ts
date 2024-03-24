@@ -46,6 +46,7 @@ export class SignUpPage implements OnInit {
 
       if (signupFormData.userType === 'seller') {
         signupFormData.canSell = false;
+        formData.append('canSell', signupFormData.canSell);
       } 
 
       delete signupFormData.confirmPassword;
@@ -55,6 +56,7 @@ export class SignUpPage implements OnInit {
       formData.append('email', signupFormData.email);
       formData.append('password', signupFormData.password);
       formData.append('userType', signupFormData.userType);
+      
       formData.append('termsAccepted', signupFormData.termsAccepted);
    
       if (this.selectedImageFile) {

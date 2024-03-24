@@ -11,6 +11,7 @@ import { Location } from '@angular/common';
 export class AddSellerPage implements OnInit {
   name!: string;
   email!: string;
+  userId: any;
 
   goToAccountPage() {
     this.location.back();
@@ -24,6 +25,10 @@ export class AddSellerPage implements OnInit {
   constructor(private http: HttpClient, private router: Router ,private location: Location) { }
 
   ngOnInit() {
+    const navigation = this.router.getCurrentNavigation();
+    if (navigation && navigation.extras.state) {
+      this.userId = navigation.extras.state['userId'];
+    }
   }
 
   addSeller() {
@@ -37,7 +42,7 @@ export class AddSellerPage implements OnInit {
       .subscribe(
         response => {
           console.log('Seller added successfully!', response);
-          this.location.back();
+          this.router.navigate([`/boss-account/${this.userId}`], { queryParams: { modified: 'true' } });
         },
         error => {
           console.error('Error adding seller:', error);

@@ -13,6 +13,7 @@ export class BossAccountPage implements OnInit {
   userId: any;
   user: any;
   sellers: any[] = [];
+  modified: boolean = false;
   logout() {
     this.router.navigate(['/intro']);
    
@@ -43,10 +44,12 @@ export class BossAccountPage implements OnInit {
   editSeller() {
   }
   GoAddSellerPage() {
-    this.router.navigate(['/add-seller']);
+    this.router.navigate(['/add-seller'],{ state: { userId: this.userId }  });
+    
   }
   GoProfilePage() {
     this.router.navigate([`/edit-profile/${this.userId}`]);
+    
   }
   goToAccountPage() {
     window.location.reload();
@@ -63,6 +66,29 @@ export class BossAccountPage implements OnInit {
 
   ngOnInit() {
     this.userId = this.route.snapshot.paramMap.get('id');
+    this.route.queryParams.subscribe(params => {
+      this.modified = params['modified'] === 'true';
+      if (this.modified) {
+        
+        this.http.get<any>(`http://localhost:5000/API/user/${this.userId}`)
+        .subscribe(response => {
+          this.user = response;
+          console.log(response);
+        });
+  
+        this.http.get<any[]>('http://localhost:5000/API/sellers')
+            .subscribe(
+            (response) => {
+              this.sellers = response;
+              console.log(this.sellers);
+            },
+            (error) => {
+              console.error(error);
+            }
+            );
+        
+      }
+    });
 
     this.http.get<any>(`http://localhost:5000/API/user/${this.userId}`)
       .subscribe(response => {

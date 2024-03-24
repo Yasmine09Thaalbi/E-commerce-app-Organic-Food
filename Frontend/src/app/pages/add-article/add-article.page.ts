@@ -59,7 +59,7 @@ export class AddArticlePage implements OnInit {
           async (response) => {
             console.log(response);
             window.alert('Data inserted successfully');
-            this.router.navigate([`/seller-account/${this.userId}`]);
+            this.router.navigate([`/seller-account/${this.userId}`], { queryParams: { modified: 'true' } });
           },
           (error) => {
             console.error(error);

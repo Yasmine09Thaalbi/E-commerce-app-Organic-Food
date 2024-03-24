@@ -15,7 +15,7 @@
     <ion-label class="user-email">{{ user.email }}</ion-label>
     <div class="button-container">
       <button class="custom-button" expand="full" (click)="GoProfilePage()">edit profile</button>
-      <button class="custom-button" expand="full" (click)="GoAddArticlePage()" *ngIf="user.canSell">add article</button>
+      <button class="custom-button" expand="full" (click)="GoAddArticlePage()"  *ngIf="user.canSell==true">add article</button>
     </div>
   </div>
 

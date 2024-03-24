@@ -45,11 +45,14 @@ export class EditProfilePage implements OnInit {
           response => {
             console.log(response);
             
-            // if (response.userType === 'seller') {
-            //   this.router.navigate([`/seller-account/${this.userId}`]);
-            // } else if (response.userType === 'customer') {
-            //   this.router.navigate([`/customer-account/${this.userId}`]);
-            // }
+            if (response.userType === 'seller') {
+              this.router.navigate([`/seller-account/${this.userId}`], { queryParams: { modified: 'true' } });
+            } else if (response.userType === 'customer') {
+              this.router.navigate([`/customer-account/${this.userId}`], { queryParams: { modified: 'true' } });
+            }
+            else if (response.userType === 'Boss') {
+              this.router.navigate([`/boss-account/${this.userId}`], { queryParams: { modified: 'true' } });
+            }
             this.location.back();
 
 
