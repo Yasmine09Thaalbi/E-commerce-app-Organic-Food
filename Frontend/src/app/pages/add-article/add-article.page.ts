@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-add-article',
@@ -22,7 +23,8 @@ export class AddArticlePage implements OnInit {
     private http: HttpClient,
     private router: Router,
     private route: ActivatedRoute,
-    private location: Location
+    private location: Location,
+    private alertController: AlertController
 
   ) {
     this.articleForm = this.formBuilder.group({
@@ -58,7 +60,7 @@ export class AddArticlePage implements OnInit {
         .subscribe(
           async (response) => {
             console.log(response);
-            window.alert('Data inserted successfully');
+            await this.presentSuccessAlert();
             this.router.navigate([`/seller-account/${this.userId}`], { queryParams: { modified: 'true' } });
           },
           (error) => {
@@ -68,6 +70,16 @@ export class AddArticlePage implements OnInit {
     } else {
       // Handle form validation errors
     }
+  }
+
+  async presentSuccessAlert() {
+    const alert = await this.alertController.create({
+      header: 'Success',
+      message: 'Product added successfully',
+      buttons: ['OK']
+    });
+  
+    await alert.present();
   }
 
   onFileSelected(event: any) {

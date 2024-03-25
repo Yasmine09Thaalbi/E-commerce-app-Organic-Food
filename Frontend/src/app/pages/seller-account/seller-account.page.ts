@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-seller-account',
@@ -9,6 +10,7 @@ import { Location } from '@angular/common';
   styleUrls: ['./seller-account.page.scss'],
 })
 export class SellerAccountPage implements OnInit {
+
   userId: any;
   user: any;
   products: any[] = [];
@@ -37,7 +39,7 @@ export class SellerAccountPage implements OnInit {
     this.location.back();
   }
 
-  constructor(private router: Router ,private route: ActivatedRoute, private http: HttpClient,private location: Location) { }
+  constructor(private router: Router ,private route: ActivatedRoute, private http: HttpClient,private location: Location,private alertController: AlertController) { }
 
   ngOnInit() {
     this.userId = this.route.snapshot.paramMap.get('id');
@@ -92,6 +94,53 @@ export class SellerAccountPage implements OnInit {
   viewProductDescription(product: any) {
     const currentPath: string = this.router.url;
     this.router.navigate(['/description-page'], { state: { product: product, path: currentPath }  });
-}
+  }
+
+  async deleteProduct(product: any) {
+    const productId = product._id;
+  
+    // Create confirmation dialog
+    const alert = await this.alertController.create({
+      header: 'Confirm Delete',
+      message: 'Are you sure you want to delete this product?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }, {
+          text: 'Delete',
+          handler: () => {
+            this.http.delete(`http://localhost:5000/API/products/${productId}`)
+              .subscribe(
+                (response) => {
+                  console.log(response); 
+                  // If you want to remove the deleted product from the UI, you can do it here
+                  const index = this.products.findIndex((p: any) => p._id === productId);
+                  if (index !== -1) {
+                    this.products.splice(index, 1);
+                  }
+                },
+                (error) => {
+                  console.error(error); 
+                }
+              );
+          }
+        }
+      ]
+    });
+  
+    await alert.present();
+  }
+  
+  
+  editProduct(product:any) {
+    const productId = product._id;
+    this.router.navigate(['/edit-article', productId]);
+
+  }
 
 }

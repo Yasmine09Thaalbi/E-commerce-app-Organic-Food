@@ -60,6 +60,11 @@ const routes: Routes = [
     path: 'boss-account/:id',
     loadChildren: () => import('./pages/boss-account/boss-account.module').then( m => m.BossAccountPageModule)
   },
+  {
+    path: 'edit-article/:id',
+    loadChildren: () => import('./pages/edit-article/edit-article.module').then( m => m.EditArticlePageModule)
+  },
+
 
 
 

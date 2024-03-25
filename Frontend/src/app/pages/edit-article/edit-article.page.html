@@ -1,0 +1,52 @@
+<ion-content class="ion-padding">
+  <div class="add-article-form">
+    <h1>Edit Article</h1>
+
+    <form [formGroup]="editArticleForm" (ngSubmit)="submitForm()">
+      <ion-item>
+        <ion-label position="floating">New Product Name</ion-label>
+        <ion-input formControlName="Product_Name" aria-label="New Product Name" type="text"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">New Description</ion-label>
+        <ion-input formControlName="description" aria-label="New Description" type="text"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">New Price</ion-label>
+        <ion-input formControlName="price" aria-label="New Price" type="number"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">New Quantity</ion-label>
+        <ion-input formControlName="quantity" aria-label="New quantity" type="number"></ion-input>
+      </ion-item>
+      <ion-item> 
+        <label  for="file-upload"> Upload New image</label>
+        <input id="file-upload" type="file" class="ion-hide" (change)="onFileSelected($event)">
+        <ion-icon name="camera" slot="end" ></ion-icon>
+        
+
+      </ion-item>
+      <button  class="ion-button" expand="full" > Edit </button>
+    </form>
+
+  </div>
+</ion-content>
+
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-tabs >
+      <ion-tab-bar >
+        <ion-tab-button  (click)="goBack()">
+          <ion-icon name="arrow-back-outline"></ion-icon>
+        </ion-tab-button>
+        <ion-tab-button  (click)="goToHomePage()">
+          <ion-icon name="home-outline"></ion-icon>
+        </ion-tab-button>
+        <ion-tab-button  (click)="goToAccountPage()">
+          <ion-icon name="person-outline"></ion-icon>
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-tabs>
+  </ion-toolbar>
+</ion-footer>

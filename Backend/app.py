@@ -71,6 +71,7 @@ def login():
 
 ## PRODUCTS ##
 
+# Fonction that the seller use to add a product #
 @app.route('/API/add_article', methods=['POST'])
 def add_article():
     data = request.form.to_dict() 
@@ -83,6 +84,7 @@ def add_article():
     return jsonify({"message": "Article added successfully"}), 200
 
 
+# Fonction to display products by catedgory in the home page #
 @app.route('/API/products/<category>', methods=['GET'])
 def get_products_by_category(category):
     # Assuming you have retrieved products from MongoDB for the specified category
@@ -97,6 +99,8 @@ def get_products_by_category(category):
 
     return jsonify(products_list)
 
+
+# Fonction to display all products in the home page #
 @app.route('/API/products/all', methods=['GET'])
 def get_all_products():
     products = products_collection.find({})
@@ -105,6 +109,32 @@ def get_all_products():
         product['_id'] = str(product['_id'])  # Convert ObjectId to string
         products_list.append(product)
     return jsonify(products_list)
+
+#Fonction that the seller use to delete a product #
+@app.route('/API/products/<product_id>', methods=['DELETE'])
+def delete_product(product_id):
+    result = products_collection.delete_one({'_id': ObjectId(product_id)})
+    
+    if result.deleted_count == 1:
+        return jsonify({'message': 'Product deleted successfully'}), 200
+    else:
+        return jsonify({'error': 'Product not found'}), 404
+
+
+#Fonction that the seller use to edit a product #
+@app.route('/API/product/<product_id>', methods=['PUT'])
+def update_product(product_id):
+    updated_product_data = request.json
+    result = products_collection.update_one(
+        {'_id': ObjectId(product_id)},
+        {'$set': updated_product_data}
+    )
+    if result.modified_count == 1:
+        return jsonify({'message': 'Product updated successfully'}), 200
+    else:
+        return jsonify({'error': 'Failed to update product'}), 500
+
+
 
 
 @app.route('/API/user/<user_id>', methods=['GET'])
