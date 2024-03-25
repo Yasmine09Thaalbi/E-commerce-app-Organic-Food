@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
+import { Location } from '@angular/common';
+import { AlertController } from '@ionic/angular';
 
 
 @Component({
@@ -13,7 +15,9 @@ export class HomePage {
 
   products: any[] = [];
 
-  constructor(private http: HttpClient,private navCtrl: NavController,private router: Router) {}
+  constructor(private http: HttpClient,private navCtrl: NavController,private router: Router,
+    private location: Location,    private alertController: AlertController
+    ) {}
 
   //Fonction to display the products by category 
   loadProductsByCategory(category: string) {
@@ -47,22 +51,44 @@ export class HomePage {
 
 
   viewProductDescription(product: any) {
-    // Navigate to the description page and pass the product data
     this.router.navigate(['/description-page'], { state: { product: product } });
   }
 
   CartPage() {
+    this.router.navigate(['/cart-page']);
   }
 
-  addToCart() {}
+  // Function to add product to cart
+   async addToCart(product: any) {
+    this.http.post('http://localhost:5000/API/cart', product).subscribe(
+      async (response) => {
+        console.log('Product added to cart:', response);
+        await this.presentSuccessAlert();
+      },
+      (error) => {
+        console.error('Error adding product to cart:', error);
+      }
+    );
+  }
+
+  async presentSuccessAlert() {
+    const alert = await this.alertController.create({
+      header: 'Success',
+      message: 'Product added to the cart successfully',
+      buttons: ['OK']
+    });
+  
+    await alert.present();
+  }
+
 
   goToAccountPage() {}
 
   goToHomePage() {
+    this.router.navigate(['/home']);
   }
 
-  goBack() {}
-
-  goToCartPage() {}
-
+  goBack() {
+    this.location.back();
+  }
 }

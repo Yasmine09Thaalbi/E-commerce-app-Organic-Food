@@ -1,4 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-cart-page',
@@ -6,12 +10,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./cart-page.page.scss'],
 })
 export class CartPagePage implements OnInit {
+  cartItems: any[] = [];
 
-  public cartItems = [
-    { name: 'Oignons rouges', quantity: 2 , price : 45 },
-    { name: 'Tomates fraîches', quantity: 3 , price : 47 },
-   
-  ];
 
   public total = this.calculateTotal();
 
@@ -29,21 +29,28 @@ export class CartPagePage implements OnInit {
   }
 
   checkout() {
+    this.router.navigate(['/checkout']);
     
   }
-  goToAccountPage() {
-    throw new Error('Method not implemented.');
-    }
-    goToHomePage() {
-    throw new Error('Method not implemented.');
-    }
-    goBack() {
-    throw new Error('Method not implemented.');
-    }
 
-  constructor() { }
+  constructor(private http: HttpClient,private navCtrl: NavController,private router: Router,
+  private location: Location,
+  ) {}
+
+  
 
   ngOnInit() {
+  }
+
+  goToAccountPage() {
+
+  }
+  
+  goToHomePage() {
+    this.router.navigate(['/home']);
+  }
+  goBack() {
+    this.location.back();
   }
 
 }

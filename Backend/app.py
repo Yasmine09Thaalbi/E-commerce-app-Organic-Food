@@ -14,6 +14,7 @@ client = pymongo.MongoClient("mongodb://localhost:27017/")
 db = client["projetmobile"]
 collection = db["users"]
 products_collection = db["products"]
+cart_collection = db["cart"]
 
 
 @app.route('/API/signup', methods=['POST'])
@@ -133,6 +134,17 @@ def update_product(product_id):
         return jsonify({'message': 'Product updated successfully'}), 200
     else:
         return jsonify({'error': 'Failed to update product'}), 500
+
+
+# Route to add a product to the cart
+@app.route('/API/cart', methods=['POST'])
+def add_to_cart():
+    product_data = request.json 
+    cart_collection.insert_one(product_data)
+    return jsonify({"message": "Product added to cart"}), 201
+
+if __name__ == '__main__':
+    app.run(debug=True)
 
 
 
