@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { Location } from '@angular/common';
 import { AlertController } from '@ionic/angular';
@@ -14,9 +14,14 @@ import { AlertController } from '@ionic/angular';
 export class HomePage {
 
   products: any[] = [];
+  orderedProducts: any[] = [];
+  userId:any;
+  userType:any;
+  quantity:any = 1;
+  
 
   constructor(private http: HttpClient,private navCtrl: NavController,private router: Router,
-    private location: Location,    private alertController: AlertController
+    private location: Location,    private alertController: AlertController,private route: ActivatedRoute
     ) {}
 
   //Fonction to display the products by category 
@@ -51,25 +56,72 @@ export class HomePage {
 
 
   viewProductDescription(product: any) {
-    this.router.navigate(['/description-page'], { state: { product: product } });
+    let stateData: any = {
+      product: product
+    };
+    if (this.userId && this.userType) {
+      console.log('UserID:', this.userId);
+      console.log('UserType:', this.userType);
+      stateData.userId = this.userId;
+      stateData.userType = this.userType;
+      
+    } else {
+      if (this.orderedProducts ) {
+        stateData.orderedProducts = this.orderedProducts;
+      }
+    }
+    this.router.navigate(['/description-page'], { state: stateData });
   }
+  
+  
+  
 
   CartPage() {
-    this.router.navigate(['/cart-page']);
-  }
-
-  // Function to add product to cart
-   async addToCart(product: any) {
-    this.http.post('http://localhost:5000/API/cart', product).subscribe(
-      async (response) => {
-        console.log('Product added to cart:', response);
-        await this.presentSuccessAlert();
-      },
-      (error) => {
-        console.error('Error adding product to cart:', error);
+    let stateData: any = {};
+    if (this.userId && this.userType) {
+      console.log('UserID:', this.userId);
+      console.log('UserType:', this.userType);
+      stateData.userId = this.userId;
+      stateData.userType = this.userType;
+      
+    } else {
+      if (this.orderedProducts ) {
+        stateData.orderedProducts = this.orderedProducts;
       }
-    );
+    }
+
+    this.router.navigate(['/cart-page'], { state: stateData });
   }
+  async addToCart(product: any) {
+    try {
+     
+      if (this.userId && this.userType === 'customer') {
+        this.http.post(`http://localhost:5000/API/cart`, { product_id :product._id , userId: this.userId , quantity: this.quantity }).subscribe(
+          async (response) => {
+            console.log('Product added to cart:', response);
+            await this.presentSuccessAlert();
+          },
+          (error) => {
+            console.error('Error adding product to cart:', error);
+          }
+        );
+      } else {
+          
+            this.orderedProducts.push({
+              _id: product._id,
+              quantity: 1
+            });
+          
+        
+        console.log('Product added to local order:', product);
+        this.presentSuccessAlert();
+      }
+      
+    } catch (error) {
+      console.error('Error adding product to cart:', error);
+    }
+  }
+  
 
   async presentSuccessAlert() {
     const alert = await this.alertController.create({
@@ -82,13 +134,52 @@ export class HomePage {
   }
 
 
-  goToAccountPage() {}
+  goToAccountPage() {
+    if (this.userId && this.userType) {
+      switch (this.userType) {
+        case 'customer':
+          this.router.navigate([`/customer-account/${this.userId}`]);
+          break;
+        case 'seller':
+          this.router.navigate([`/seller-account/${this.userId}`]);
+          break;
+        case 'Boss':
+          this.router.navigate([`/boss-account/${this.userId}`]);
+          break;
+        default:
+          console.error('Invalid user type');
+          break;
+      }  
+    } else {
+        this.router.navigate(['/sign-in']); 
+    }
+  }
 
   goToHomePage() {
-    this.router.navigate(['/home']);
+    let stateData: any = {};
+    if (this.userId && this.userType) {
+      console.log('UserID:', this.userId);
+      console.log('UserType:', this.userType);
+      this.router.navigate(['/home'], { queryParams: { userId: this.userId, userType: this.userType } });
+    } else {
+      if (this.orderedProducts ) {
+        stateData.orderedProducts = this.orderedProducts;
+        this.router.navigate(['/home'], { state: stateData });
+      }
+    }
   }
 
   goBack() {
     this.location.back();
   }
+  ngOnInit(){
+    
+    this.userId = this.route.snapshot.queryParams['userId'];
+    this.userType = this.route.snapshot.queryParams['userType'];
+    if (history.state && history.state.orderedProducts ) {
+        this.orderedProducts = history.state.orderedProducts;
+          
+    }
+   console.log('Ordered Products:', this.orderedProducts); 
+}
 }

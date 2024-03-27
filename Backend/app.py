@@ -3,6 +3,7 @@ from flask_cors import CORS
 import pymongo
 from base64 import b64encode , b64decode
 from bson import ObjectId
+from bson.json_util import dumps  
 
 
 
@@ -100,6 +101,19 @@ def get_products_by_category(category):
 
     return jsonify(products_list)
 
+@app.route('/API/productsbyId/<product_id>', methods=['GET'])
+def get_products_by_id(product_id):
+    # Assuming you have retrieved products from MongoDB for the specified category
+    products = products_collection.find({'_id': ObjectId(product_id)})
+
+    # Convert MongoDB cursor to a list of dictionaries
+    products_list = []
+    for product in products:
+        # Convert ObjectId to string
+        product['_id'] = str(product['_id'])
+        products_list.append(product)
+
+    return jsonify(products_list)
 
 # Fonction to display all products in the home page #
 @app.route('/API/products/all', methods=['GET'])
@@ -136,18 +150,48 @@ def update_product(product_id):
         return jsonify({'error': 'Failed to update product'}), 500
 
 
-# Route to add a product to the cart
 @app.route('/API/cart', methods=['POST'])
 def add_to_cart():
-    product_data = request.json 
-    cart_collection.insert_one(product_data)
-    return jsonify({"message": "Product added to cart"}), 201
+    try:
+        data = request.json
+        cart_collection.insert_one(data)
+        return jsonify({'message': 'Product added to cart successfully'}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
-if __name__ == '__main__':
-    app.run(debug=True)
 
 
+@app.route('/API/cart/<user_id>', methods=['GET'])
+def get_cart_items(user_id):
+    try:
+        cart_items_list = list(cart_collection.find({'userId': user_id}))
+        print(cart_items_list)
+        cart_items = []
+        
+        for item in cart_items_list:
+           cart_items.append({
+                '_id': item['product_id'],
+                'quantity': item['quantity'],
+            })
+        return jsonify({'cart_items': cart_items}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
+
+@app.route('/API/update/cart/<product_id>', methods=['PUT'])
+def update_cart_item( product_id):
+    try:
+        data = request.json
+        new_quantity = data.get('quantity')
+        user_id= data.get('userId')
+        result = cart_collection.update_one({'userId': user_id, 'product_id': product_id}, {'$set': {'quantity': new_quantity}})
+        
+        if result.modified_count == 1:
+            return jsonify({'message': 'Quantity updated successfully'}), 200
+        else:
+            return jsonify({'error': 'Failed to update quantity. Cart item not found.'}), 404  # Not found status code
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 @app.route('/API/user/<user_id>', methods=['GET'])
 def get_user_by_id(user_id):

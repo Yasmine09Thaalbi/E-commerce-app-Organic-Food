@@ -1,8 +1,12 @@
 <ion-content class="ion-padding">
   <ion-card>
     <ion-img [src]="decodedImage"></ion-img>
-    <ion-card-header>
+    <ion-card-header *ngIf="this.userType=='seller'">
       <ion-card-title>{{ product.Product_Name }}<ion-icon style ="margin-left: 70px;" name="remove-circle" color="medium" (click)="remove()"></ion-icon> {{ product.quantity ? product.quantity : 1 }} <ion-icon name="add-circle" style="color:  #82C408;" (click)="add()"></ion-icon>
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-header *ngIf="this.userType=='customer'|| this.userType==''">
+      <ion-card-title>{{ product.Product_Name }}<ion-icon style ="margin-left: 70px;" name="remove-circle" color="medium" (click)="removeclient()"></ion-icon> {{quantity}} <ion-icon name="add-circle" style="color:  #82C408;" (click)="addclient()"></ion-icon>
       </ion-card-title>
     </ion-card-header>
     <ion-card-content>
@@ -10,7 +14,7 @@
      {{ product.description }}
     </ion-card-content>
   </ion-card>
-  <button class="ion-button" expand="full" *ngIf="!this.previousUrl || this.previousUrl.startsWith('customer-account')">Add to cart</button>
+  <button class="ion-button" expand="full" *ngIf="this.userType=='customer'||this.userType==''" (click)="addToCart(product)">Add to cart</button>
 
 </ion-content>
 <ion-footer>

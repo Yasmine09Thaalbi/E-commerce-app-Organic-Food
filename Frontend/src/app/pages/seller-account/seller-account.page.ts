@@ -33,7 +33,7 @@ export class SellerAccountPage implements OnInit {
     
   }
   goToHomePage() {
-    this.router.navigate(['/home']);
+    this.router.navigate(['/home'], { queryParams: { userId: this.userId, userType: this.user.userType } });
   }
   goBack() {
     this.location.back();
