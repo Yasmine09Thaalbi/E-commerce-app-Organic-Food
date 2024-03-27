@@ -1,15 +1,15 @@
 <ion-content class="ion-padding">
+  <form [formGroup]="checkoutForm" (ngSubmit)="submitForm()">
   <div class="Shipping-form">
     <h1>Enter Shipping Details</h1>
-
     <ion-item>
       <ion-label position="floating">Full Name</ion-label>
-      <ion-input type="text"></ion-input>
+      <ion-input type="text" formControlName="fullName"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label position="floating">Address</ion-label>
-      <ion-input type="text"></ion-input>
+      <ion-input type="text" formControlName="address"></ion-input>
     </ion-item>
 
     <ion-item>
@@ -23,72 +23,73 @@
 
     <ion-item>
       <ion-label position="floating">Street Address</ion-label>
-      <ion-input type="text"></ion-input>
+      <ion-input type="text" formControlName="streetAddress"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label position="floating">Postal Code</ion-label>
-      <ion-input type="text"></ion-input>
+      <ion-input type="text" formControlName="postalCode"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label position="floating">Phone Number</ion-label>
-      <ion-input type="tel"></ion-input>
+      <ion-input type="tel" formControlName="phoneNumber"></ion-input>
     </ion-item>
 
     <h1>Payment Method</h1>
 
     <ion-item lines="none" style="margin-top: 10px;">
-      <ion-radio-group   [(ngModel)]="selectedPaymentMethod" style="display: flex; flex-direction: column;">
-        <ion-radio value="cash" aria-label="Cash payment">
+      <ion-radio-group   formControlName="paymentMethod" style="display: flex; flex-direction: column;">
+        <ion-radio  value="cash" aria-label="Cash payment">
           <ion-icon name="cash-outline" color="success" size="large"></ion-icon>
           <ion-label>Cash</ion-label>
         </ion-radio>
 
-        <ion-radio value="creditCard" aria-label="Credit Card payment" style="margin-top: 10px;">
+        <ion-radio  value="creditCard" aria-label="Credit Card payment" style="margin-top: 10px;">
           <ion-icon name="card-outline" color="warning" size="large"></ion-icon>
           <ion-label>Credit Card</ion-label>
         </ion-radio>
       </ion-radio-group>
     </ion-item>
 
-    <ion-item *ngIf="selectedPaymentMethod === 'creditCard'">
+    <ion-item *ngIf="checkoutForm.get('paymentMethod')?.value === 'creditCard'">
       <ion-label position="floating">Card Holder Name</ion-label>
-      <ion-input type="text"></ion-input>
+      <ion-input type="text" formControlName="cardHolderName"></ion-input>
     </ion-item>
 
-    <ion-item *ngIf="selectedPaymentMethod === 'creditCard'">
+    <ion-item *ngIf="checkoutForm.get('paymentMethod')?.value === 'creditCard'">
       <ion-label position="floating">Card Number</ion-label>
-      <ion-input type="number"></ion-input>
+      <ion-input type="number" formControlName="cardNumber"></ion-input>
     </ion-item>
 
-    <div style="display: flex; justify-content: space-between;" *ngIf="selectedPaymentMethod === 'creditCard'">
+    <div style="display: flex; justify-content: space-between;" *ngIf="checkoutForm.get('paymentMethod')?.value === 'creditCard'">
 
       <ion-item>
         <ion-label position="floating" style="font-weight: bold; color: black;">Expiry Date</ion-label>
-        <ion-input type="date"></ion-input>
+        <ion-input type="date" formControlName="expiryDate"></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label position="floating" style="font-weight: bold; color: black;">CVV</ion-label>
-        <ion-input type="number" style="width: 30%;"></ion-input>
+        <ion-input type="number" style="width: 30%;" formControlName="cvv"></ion-input>
       </ion-item>
     </div>
   </div>
-  <button class="ion-button checkout-button" expand="full">Place Order</button>
+  <button type="submit" class="ion-button checkout-button" expand="full">Place Order</button>
+  </form>
 </ion-content>
 
 <ion-footer>
   <ion-toolbar>
     <ion-tabs>
       <ion-tab-bar>
-        <ion-tab-button tab="tab-go-back">
+        <ion-tab-button (click)="goBack()">
           <ion-icon name="arrow-back-outline"></ion-icon>
         </ion-tab-button>
-        <ion-tab-button tab="tab-home">
+        <ion-tab-button (click)="goToHomePage()">
           <ion-icon name="home-outline"></ion-icon>
         </ion-tab-button>
-        <ion-tab-button tab="tab-account">
+        <ion-tab-button (click)="goToAccountPage()">
           <ion-icon name="person-outline"></ion-icon>
         </ion-tab-button>
       </ion-tab-bar>

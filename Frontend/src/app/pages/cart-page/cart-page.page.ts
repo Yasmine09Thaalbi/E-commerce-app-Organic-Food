@@ -64,7 +64,7 @@ export class CartPagePage implements OnInit {
   }
 
   checkout() {
-    this.router.navigate(['/checkout']);
+    this.router.navigate(['/checkout'], { queryParams: { userId: this.userId } });
     
   }
 

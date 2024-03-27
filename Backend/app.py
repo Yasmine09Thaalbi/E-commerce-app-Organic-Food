@@ -16,7 +16,7 @@ db = client["projetmobile"]
 collection = db["users"]
 products_collection = db["products"]
 cart_collection = db["cart"]
-
+order_collection = db["order"]
 
 @app.route('/API/signup', methods=['POST'])
 def signup():
@@ -125,6 +125,19 @@ def get_all_products():
         products_list.append(product)
     return jsonify(products_list)
 
+# Fonction to display best selling products in home page #
+@app.route('/API/best_selling_products', methods=['GET'])
+def get_best_selling_products():
+    best_selling_products = products_collection.find({"Product_Name": {"$in": ["Bell Pepper Red", "Lamb Meat"]}})
+
+    best_selling_products_list = []
+    for product in best_selling_products:
+        product['_id'] = str(product['_id'])
+        best_selling_products_list.append(product)
+
+    return jsonify(best_selling_products_list)
+
+
 #Fonction that the seller use to delete a product #
 @app.route('/API/products/<product_id>', methods=['DELETE'])
 def delete_product(product_id):
@@ -149,6 +162,8 @@ def update_product(product_id):
     else:
         return jsonify({'error': 'Failed to update product'}), 500
 
+
+##  Cart  ## 
 
 @app.route('/API/cart', methods=['POST'])
 def add_to_cart():
@@ -192,6 +207,21 @@ def update_cart_item( product_id):
             return jsonify({'error': 'Failed to update quantity. Cart item not found.'}), 404  # Not found status code
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+## Checkout ##
+@app.route('/API/register_order', methods=['POST'])
+def register_order():
+    data = request.json
+    try:
+        data = request.json
+        user_id = data.get('userId') 
+    
+        inserted_order = order_collection.insert_one(data)
+        order_id = str(inserted_order.inserted_id)
+        return jsonify({'orderId': order_id}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
 
 @app.route('/API/user/<user_id>', methods=['GET'])
 def get_user_by_id(user_id):
@@ -240,13 +270,18 @@ def update_profile(user_id):
 
 
 ## FONCTION TO RETURN THE USER TYPE ##
-def get_user_type(user_id):
-    user = collection.find_one({'_id': ObjectId(user_id)})
-    if user:
-        return user.get('userType')
+@app.route('/API/getUserType', methods=['GET'])
+def get_user_type():
+    user_id = request.args.get('userId') 
+    if user_id:
+        user = collection.find_one({'_id': ObjectId(user_id)})
+        if user:
+            user_type = user.get('userType')
+            return jsonify({'userType': user_type}), 200
+        else:
+            return jsonify({'error': 'User not found'}), 404
     else:
-        return None
-
+        return jsonify({'error': 'User ID parameter is missing'}), 400
 
 
 @app.route('/API/sellers', methods=['GET'])

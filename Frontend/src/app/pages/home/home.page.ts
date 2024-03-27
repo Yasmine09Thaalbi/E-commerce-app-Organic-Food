@@ -15,6 +15,7 @@ export class HomePage {
 
   products: any[] = [];
   orderedProducts: any[] = [];
+  bestSellingProducts: any[] = [];
   userId:any;
   userType:any;
   quantity:any = 1;
@@ -172,6 +173,18 @@ export class HomePage {
   goBack() {
     this.location.back();
   }
+
+  loadBestSellingProducts() {
+    this.http.get<any[]>('http://localhost:5000/API/best_selling_products').subscribe(
+      (response) => {
+        this.bestSellingProducts = response;
+      },
+      (error) => {
+        console.error('Error fetching best selling products:', error);
+      }
+    );
+  }
+  
   ngOnInit(){
     
     this.userId = this.route.snapshot.queryParams['userId'];
@@ -181,5 +194,7 @@ export class HomePage {
           
     }
    console.log('Ordered Products:', this.orderedProducts); 
+
+   this.loadBestSellingProducts();
 }
 }

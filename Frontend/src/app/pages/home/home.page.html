@@ -69,41 +69,20 @@
 
   <p>Best selling</p>
   <ion-grid>
-    <ion-row>
-      <ion-col size="6">
-        <ion-card class="card">
+    <ion-row >
+      <ion-col size="6" *ngFor="let product of bestSellingProducts">
+        <ion-card class="card" >
           <div style="display: flex; justify-content: center;">
-            <ion-img src="assets/images/bell pepper.png"></ion-img>
+            <ion-img (click)="viewProductDescription(product)" [src]="getBase64Image(product.image)"></ion-img>
           </div>
           <ion-card-header>
-            <ion-label >Bell Pepper Red</ion-label>
+            <ion-label >{{ product.Product_Name }}</ion-label>
           </ion-card-header>
           <ion-card-content>
             <ion-label style="display: flex; justify-content: space-between; align-items: center; color: #FF324B;">
-              <span>$45/1kg</span>
+              <span>${{ product.price }}/1kg</span>
               <ion-buttons slot="end">
-                <ion-button  >
-                  <ion-icon  class="custom-icon" name="add-circle"></ion-icon>
-                </ion-button>
-              </ion-buttons>
-            </ion-label>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-
-      <ion-col size="6">
-        <ion-card class="card">
-          <div style="display: flex; justify-content: center;">
-            <ion-img src="assets/images/lamb meat.png"></ion-img>
-          </div>
-          <ion-card-header>
-            <ion-label >Lamb Meat</ion-label>
-          </ion-card-header>
-          <ion-card-content>
-            <ion-label style="display: flex; justify-content: space-between; align-items: center; color: #FF324B;">
-              <span>$45/1kg</span>
-              <ion-buttons slot="end">
-                <ion-button >
+                <ion-button  (click)="addToCart(product)" >
                   <ion-icon  class="custom-icon" name="add-circle"></ion-icon>
                 </ion-button>
               </ion-buttons>
@@ -113,8 +92,6 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-
-  
 </ion-content>
 
 

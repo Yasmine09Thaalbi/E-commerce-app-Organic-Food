@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-customer-account',
@@ -11,7 +12,7 @@ export class CustomerAccountPage implements OnInit {
   user: any;
   userId: any;
 
-  constructor(private router: Router ,private route: ActivatedRoute, private http: HttpClient) { }
+  constructor(private router: Router ,private route: ActivatedRoute, private http: HttpClient,private location: Location) { }
 
   ngOnInit() {
     this.userId = this.route.snapshot.paramMap.get('id');
@@ -27,7 +28,9 @@ export class CustomerAccountPage implements OnInit {
     return 'data:image/jpeg;base64,' + encodedImage;
   }
 
-  logout() {}
+  logout() {
+    this.router.navigate(['/intro']);
+  }
 
   GoEditProfilePage() {
     this.router.navigate([`/edit-profile/${this.userId}`]);
@@ -42,6 +45,7 @@ export class CustomerAccountPage implements OnInit {
     this.router.navigate(['/home'], { queryParams: { userId: this.userId, userType: this.user.userType } });
   }
   goBack() {
+    this.location.back();
   }
 
 
