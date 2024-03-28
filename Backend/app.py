@@ -211,16 +211,51 @@ def update_cart_item( product_id):
 ## Checkout ##
 @app.route('/API/register_order', methods=['POST'])
 def register_order():
-    data = request.json
     try:
         data = request.json
-        user_id = data.get('userId') 
-    
-        inserted_order = order_collection.insert_one(data)
+        user_id = data.get('userId')
+        
+        if user_id is None:
+            return jsonify({'error': 'userId is required'}), 400
+        
+        total = data.get('total')
+        product_names = data.get('productNames')
+        
+        if total is None or product_names is None:
+            return jsonify({'error': 'total and productNames are required'}), 400
+        
+        inserted_order = order_collection.insert_one({
+            'userId': user_id,
+            'total': total,
+            'productNames': product_names,
+            'fullName': data.get('fullName'),
+            'address': data.get('address'),
+            'streetAddress': data.get('streetAddress'),
+            'postalCode': data.get('postalCode'),
+            'phoneNumber': data.get('phoneNumber'),
+            'paymentMethod': data.get('paymentMethod'),
+            'cardHolderName': data.get('cardHolderName'),
+            'cardNumber': data.get('cardNumber'),
+            'expiryDate': data.get('expiryDate'),
+            'cvv': data.get('cvv')
+        })
+        
         order_id = str(inserted_order.inserted_id)
         return jsonify({'orderId': order_id}), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+
+# Display order in customer account #
+@app.route('/API/orders/<user_id>', methods=['GET'])
+def get_orders(user_id):
+    orders = list(order_collection.find({'userId': user_id}))
+
+    for order in orders:
+        order['_id'] = str(order['_id'])
+
+    return jsonify(orders)
+
 
 
 @app.route('/API/user/<user_id>', methods=['GET'])

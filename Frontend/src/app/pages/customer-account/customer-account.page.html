@@ -18,12 +18,35 @@
 
 
   <p>My Orders</p>
-  <ion-card class="purchase-card">
+  <ion-card class="purchase-card" *ngFor="let order of orders">
     <ion-item>
-      <ion-label slot="start">#Order_Id</ion-label>
-      <ion-label  class="item-price">delivered</ion-label>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="10">
+            <ion-label>#{{ order._id }}</ion-label>
+          </ion-col>
+          <ion-col size="2">
+            <ion-button fill="clear" size="small" (click)="toggleDetails(order)">
+              <ion-icon name="chevron-down-outline" *ngIf="!order.showDetails"></ion-icon>
+              <ion-icon name="chevron-up-outline" *ngIf="order.showDetails"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="order.showDetails">
+          <ion-col size="12">
+            <ion-label>Total: ${{ order.total }}</ion-label>
+            <ion-label>Products:</ion-label>
+            <ion-list>
+              <ion-item *ngFor="let product of order.productNames">
+                <ion-label>{{ product }}</ion-label>
+              </ion-item>
+            </ion-list>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-item>
   </ion-card>
+  
 </ion-content>
 
 

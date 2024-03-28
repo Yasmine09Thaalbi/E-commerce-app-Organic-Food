@@ -9,10 +9,15 @@ import { Location } from '@angular/common';
   styleUrls: ['./customer-account.page.scss'],
 })
 export class CustomerAccountPage implements OnInit {
+  toggleDetails(order: any) {
+    order.showDetails = !order.showDetails;
+  }
   user: any;
   userId: any;
+  orders: any[] = [];
 
-  constructor(private router: Router ,private route: ActivatedRoute, private http: HttpClient,private location: Location) { }
+  constructor(private router: Router ,private route: ActivatedRoute,
+    private http: HttpClient,private location: Location) { }
 
   ngOnInit() {
     this.userId = this.route.snapshot.paramMap.get('id');
@@ -21,6 +26,12 @@ export class CustomerAccountPage implements OnInit {
       .subscribe(response => {
         this.user = response;
         console.log(response);
+      });
+
+    this.http.get<any>(`http://localhost:5000/API/orders/${this.userId}`)
+      .subscribe(response => {
+        this.orders = response;
+        console.log('Orders:', response);
       });
   }
 

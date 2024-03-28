@@ -11,7 +11,7 @@
         {{ item.quantity }}
         <ion-icon name="add-circle" class="quantity-icon" (click)="increaseQuantity(item)"></ion-icon>
       </ion-buttons>
-    </ion-item> 
+    </ion-item>
   </ion-list>
 </ion-content>
 
@@ -21,7 +21,7 @@
     <div class="total2"  >subtotal :  <span style="margin-left: 71%;">${{this.calculateTotal()}}</span></div>
     <div class="total2"  >shipping charges :  <span style="margin-left: 54%; ">${{this.shipping_charges}}</span></div>
     <div class="total">TOTAL :  <span style="margin-left: 60%;">${{this.calculateTotal()+this.shipping_charges}}</span></div>
-    <button class="ion-button checkout-button" expand="full" (click)="checkout()">Check out</button>
+    <button class="ion-button checkout-button" expand="full" (click)="checkout(calculateTotal() + shipping_charges, getCartProductNames())">Check out</button>
   </ion-toolbar>
   <ion-toolbar>
     <ion-tabs >

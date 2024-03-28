@@ -13,6 +13,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class CheckoutPage implements OnInit {
   checkoutForm!: FormGroup;
   userId:  string ='';
+  userType:  string ='';
+  total:any;
+  productNames: any[] = [];
   
   constructor(private http: HttpClient,private navCtrl: NavController,private router: Router,
     private route: ActivatedRoute,private location: Location,private formBuilder: FormBuilder, private alertController: AlertController) {
@@ -32,12 +35,17 @@ export class CheckoutPage implements OnInit {
   
     async submitForm() {
       if (this.checkoutForm.valid) {
-        const data = { ...this.checkoutForm.value, userId: this.userId }; 
+        const data = { 
+          ...this.checkoutForm.value, 
+          userId: this.userId,
+          total: this.total,
+          productNames: this.productNames
+        }; 
         try {
           const response = await this.http.post<any>('http://localhost:5000/API/register_order', data).toPromise();
           console.log('Order registered successfully. Order ID:', response.orderId);
           await this.presentSuccessAlert();
-          // Redirect to its home page
+          this.goToHomePage();
         } catch (error) {
           console.error('Error registering order:', error);
         }
@@ -58,8 +66,16 @@ export class CheckoutPage implements OnInit {
   
 
     async ngOnInit() {
-      this.userId = this.route.snapshot.queryParams['userId'];
+      const queryParams = this.route.snapshot.queryParams;
+      this.userId = queryParams['userId'];
+      this.userType = queryParams['userType'];
       console.log('User ID:', this.userId);
+      console.log('User Type:', this.userType);
+
+      // Extract total and product names from query parameters
+      this.total = queryParams['total'];
+      this.productNames = queryParams['productNames'].split(', ');
+    
     }
 
 
@@ -69,10 +85,28 @@ export class CheckoutPage implements OnInit {
   }
 
   goToAccountPage() {
-
+    if (this.userId && this.userType) {
+      switch (this.userType) {
+        case 'customer':
+          this.router.navigate([`/customer-account/${this.userId}`]);
+          break;
+        case 'seller':
+          this.router.navigate([`/seller-account/${this.userId}`]);
+          break;
+        case 'Boss':
+          this.router.navigate([`/boss-account/${this.userId}`]);
+          break;
+        default:
+          console.error('Invalid user type');
+          break;
+      }  
+    } else {
+        this.router.navigate(['/sign-in']); 
+    }
   }
 
   goToHomePage() {
+    this.router.navigate(['/home'], { queryParams: { userId: this.userId, userType: this.userType } });
   }
 
 }

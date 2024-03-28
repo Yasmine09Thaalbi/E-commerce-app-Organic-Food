@@ -63,9 +63,15 @@ export class CartPagePage implements OnInit {
     
   }
 
-  checkout() {
-    this.router.navigate(['/checkout'], { queryParams: { userId: this.userId } });
-    
+  checkout(total: number, productNames: string[]) {
+    this.router.navigate(['/checkout'], { 
+      queryParams: { 
+        userId: this.userId,
+        userType: this.userType,
+        total: total,
+        productNames: productNames.join(', ') 
+      } 
+    });
   }
 
   constructor(private http: HttpClient,private navCtrl: NavController,private router: Router,
@@ -134,6 +140,10 @@ export class CartPagePage implements OnInit {
     );
       }
   }
+}
+
+getCartProductNames(): string[] {
+  return this.cartItems.map(item => item.details[0].Product_Name);
 }
 
   goToAccountPage() {
