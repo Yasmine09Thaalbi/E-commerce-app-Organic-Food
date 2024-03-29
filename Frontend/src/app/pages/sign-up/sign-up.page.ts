@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-up',
@@ -13,8 +13,10 @@ export class SignUpPage implements OnInit {
   signupForm!: FormGroup;
   @ViewChild('fileInput') fileInput: any;
   selectedImageFile: File | undefined;
+  total:any;
+  productNames: any[] = [];
 
-  constructor(private auth: AuthService,private formBuilder: FormBuilder,private router: Router) {
+  constructor(private auth: AuthService,private formBuilder: FormBuilder,private router: Router ,private route: ActivatedRoute) {
     this.signupForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
@@ -26,6 +28,9 @@ export class SignUpPage implements OnInit {
   }
 
   ngOnInit() {
+    const queryParams = this.route.snapshot.queryParams;
+    this.total = queryParams['total'];
+    this.productNames = queryParams['productNames'].split(', ');
   }
 
   validatePasswordConfirmation(formGroup: FormGroup): { [key: string]: boolean } | null {
@@ -37,6 +42,20 @@ export class SignUpPage implements OnInit {
     }
 
     return null;
+  }
+  gotosignin(){
+    if(this.productNames && this.total){
+      this.router.navigate(['/sign-in'], { 
+        queryParams: { 
+          total: this.total,
+          productNames: this.productNames.join(', ') 
+        } 
+      });
+    }
+    else{
+      this.router.navigate(['/sign-in']);
+    }
+
   }
 
   submitForm() {

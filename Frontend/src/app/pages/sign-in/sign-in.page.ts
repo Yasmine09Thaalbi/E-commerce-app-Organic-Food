@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-in',
@@ -11,8 +11,10 @@ import { Router } from '@angular/router';
 export class SignInPage implements OnInit {
 
   loginForm!: FormGroup;
+  total:any;
+  productNames: any[] = [];
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router) { }
+  constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router,private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
@@ -24,6 +26,10 @@ export class SignInPage implements OnInit {
           email: '',
           password: ''
         });
+    const queryParams = this.route.snapshot.queryParams;
+    this.total = queryParams['total'];
+    this.productNames = queryParams['productNames'].split(', ');
+
   }
 
   onSubmit() {
@@ -33,26 +39,41 @@ export class SignInPage implements OnInit {
         (response: any) => {
           console.log(response);
           const userId = response.userId;
-          const userType = response.userType; 
-          switch (userType) {
-            case 'customer':
-              this.router.navigate([`/customer-account/${userId}`]);
-              break;
-            case 'seller':
-              this.router.navigate([`/seller-account/${userId}`]);
-              break;
-            case 'Boss':
-              this.router.navigate([`/boss-account/${userId}`]);
-              break;
-            default:
-              console.error('Invalid user type');
-              break;
+          const userType = response.userType;
+          if(this.total && this.productNames)
+          {
+            this.router.navigate(['/checkout'], { 
+              queryParams: { 
+                userId: userId,
+                userType: userType,
+                total: this.total,
+                productNames: this.productNames.join(', ') 
+              } 
+            });
           }
-  
-          this.loginForm.patchValue({
-            email: '',
-            password: ''
-          });
+          else{
+            switch (userType) {
+              case 'customer':
+                this.router.navigate([`/customer-account/${userId}`]);
+                break;
+              case 'seller':
+                this.router.navigate([`/seller-account/${userId}`]);
+                break;
+              case 'Boss':
+                this.router.navigate([`/boss-account/${userId}`]);
+                break;
+              default:
+                console.error('Invalid user type');
+                break;
+            }
+    
+            this.loginForm.patchValue({
+              email: '',
+              password: ''
+            });
+            
+          }
+          
         },
         error => {
           console.error('Error:', error);
