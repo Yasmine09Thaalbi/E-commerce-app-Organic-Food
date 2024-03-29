@@ -29,8 +29,12 @@ export class SignUpPage implements OnInit {
 
   ngOnInit() {
     const queryParams = this.route.snapshot.queryParams;
+    if (queryParams !== null) {
     this.total = queryParams['total'];
-    this.productNames = queryParams['productNames'].split(', ');
+    if (queryParams['productNames'] !== undefined) {
+      this.productNames = queryParams['productNames'].split(', ');
+    }
+    }
   }
 
   validatePasswordConfirmation(formGroup: FormGroup): { [key: string]: boolean } | null {

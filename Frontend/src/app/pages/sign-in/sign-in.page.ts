@@ -26,10 +26,14 @@ export class SignInPage implements OnInit {
           email: '',
           password: ''
         });
-    const queryParams = this.route.snapshot.queryParams;
-    this.total = queryParams['total'];
-    this.productNames = queryParams['productNames'].split(', ');
 
+    const queryParams = this.route.snapshot.queryParams;
+    if (queryParams !== null) {
+    this.total = queryParams['total'];
+    if (queryParams['productNames'] !== undefined) {
+      this.productNames = queryParams['productNames'].split(', ');
+    }
+    }
   }
 
   onSubmit() {
